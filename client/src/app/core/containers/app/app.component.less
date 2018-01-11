@@ -1,0 +1,35 @@
+@import (reference) "../../../../styles";
+
+.mat-sidenav-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.mat-sidenav {
+  width: 200px;
+  max-width: 200px;
+  border-right: 1px solid #e0e1e5;
+
+  .mat-nav-list {
+    overflow-y: auto;
+  }
+
+  a.active.mat-list-item {
+    border-left: 2px solid #ff4081;
+    color: #ff4081;
+  }
+}
+
+.mat-toolbar.top {
+  height: @topToolbarH;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  //  border-bottom: 1px solid #e0e1e5;
+  color: #333;
+  box-sizing: border-box;
+  .avatar {
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}

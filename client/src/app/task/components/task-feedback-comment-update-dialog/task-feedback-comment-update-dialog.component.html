@@ -1,0 +1,25 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title truncate">
+    {{'COMMON.COMMENT'|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form fxFlex #form="ngForm" style="overflow-y: auto">
+  <jwjh-exam-question-input [(ngModel)]="taskFeedbackComment.examQuestions" name="examQuestions"></jwjh-exam-question-input>
+  <jwjh-editor [(ngModel)]="taskFeedbackComment.note" name="content"></jwjh-editor>
+  <jwjh-file-input [(ngModel)]="taskFeedbackComment.attachments" name="attachments"></jwjh-file-input>
+
+  <button type="button" color="primary" mat-button (click)="submit()" [disabled]="!form.form.valid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>
+
+<!--<mat-dialog-actions>-->
+<!--&lt;!&ndash;<span fxFlex></span>&ndash;&gt;-->
+<!--<button type="button" color="primary" mat-button (click)="submit()" [disabled]="!form.form.valid">-->
+<!--{{'COMMON.FINISH'|translate}}-->
+<!--</button>-->
+<!--</mat-dialog-actions>-->

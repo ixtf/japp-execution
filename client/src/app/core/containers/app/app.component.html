@@ -1,0 +1,61 @@
+<mat-sidenav-container class="app-sidenav">
+  <mat-sidenav #sidenav [opened]="sidenavOpened$|async" [mode]="sidenavMode$|async" (click)="sidenavToggle()" fxLayout="column" *ngIf="showSidenav$|async">
+    <a routerLink="/" fxLayout>
+      <mat-toolbar class="top">
+        <img src="./assets/img/logo.png" height="50px">
+      </mat-toolbar>
+    </a>
+
+    <mat-nav-list [hidden]="!(isLoggedIn$|async)" fxFlex>
+      <a mat-list-item routerLink="/tasks/progress" routerLinkActive="active">
+        {{'NAV.TASK-PROGRESS'|translate}}
+      </a>
+      <a mat-list-item routerLink="/examQuestions/review" routerLinkActive="active">
+        {{'NAV.EXAM_QUESTION_REVIEW'|translate}}
+      </a>
+      <a mat-list-item routerLink="/examQuestions/reviewManage" routerLinkActive="active">
+        {{'NAV.EXAM_QUESTION_REVIEW'|translate}}({{'COMMON.MANAGE'|translate}})
+      </a>
+      <a mat-list-item routerLink="/tasks/batch" routerLinkActive="active">
+        {{'NAV.BATCH-OPERATION'|translate}}
+      </a>
+      <a mat-list-item routerLink="/examQuestions/labs" routerLinkActive="active">
+        {{'NAV.EXAMQUESTIONLAB-MANAGE'|translate}}
+      </a>
+      <a mat-list-item routerLink="/enlists/paymentMerchants" routerLinkActive="active">
+        {{'NAV.PAYMENTMERCHANT-MANAGE'|translate}}
+      </a>
+      <a mat-list-item routerLink="/enlists/progress" routerLinkActive="active">
+        {{'NAV.ENLIST-PROGRESS'|translate}}
+      </a>
+      <!--<a mat-list-item routerLink="/reports/my" routerLinkActive="active">-->
+      <!--{{'NAV.MY-REPORT'|translate}}-->
+      <!--</a>-->
+      <a mat-list-item routerLink="/tasks/history" routerLinkActive="active">
+        {{'NAV.TASK-PROGRESS-HISTORY'|translate}}
+      </a>
+      <a mat-list-item target="_blank"
+         href="https://mp.weixin.qq.com/s?__biz=MzI2MDAyNzA0Mg==&mid=402847673&idx=1&sn=01ec9fdc18a2ba38d9300dddd6f7074d&scene=0&previewkey=cX6MMdSITX74ZJQacTqBBMwqSljwj2bfCUaCyDofEow%3D#wechat_redirect">
+        {{'COMMON.HELP'|translate}}
+      </a>
+      <a mat-list-item routerLink="/admins/paymentMerchants" routerLinkActive="active" [hidden]="!(isAdmin$|async)">
+        {{'NAV.PAYMENTMERCHANT-MANAGE'|translate}}
+      </a>
+      <a mat-list-item routerLink="/admins/plans" routerLinkActive="active" [hidden]="!(isAdmin$|async)">
+        {{'NAV.PLAN-AUDIT'|translate}}
+      </a>
+      <a mat-list-item href="http://www.wjh001.com/execution/api/auth/logout">
+        {{'COMMON.LOGOUT'|translate}}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-toolbar class="top" [hidden]="!(isLoggedIn$|async)" *ngIf="showToolbar$|async">
+    <button (click)="sidenav.open()" mat-icon-button *ngIf="isMobile$|async">
+      <mat-icon style="color: #59c2d8">menu</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <img routerLink="/personal" class="avatar" [src]="authOperator$|async|operatorAvatar" [alt]="(authOperator$|async)?.name">
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>

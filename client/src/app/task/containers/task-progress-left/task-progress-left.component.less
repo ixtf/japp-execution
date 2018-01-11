@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  mat-card.task {
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #ededed;
+    color: #999;
+    background-color: rgb(250, 250, 250);
+
+    .badge {
+      margin-right: 8px;
+      &.never-read {
+        width: 40px;
+      }
+    }
+
+    mat-card-title {
+      font-size: 16px;
+      padding: 16px 0 0 16px;
+      margin-bottom: 0;
+      color: #666;
+    }
+
+    mat-card-actions {
+      min-height: 36px;
+    }
+
+    & > .mat-card-actions:last-child {
+      margin: 0;
+    }
+
+    &.active {
+      background-color: #59c2d8;
+      color: #fff;
+      mat-card-title {
+        color: #fff;
+      }
+    }
+  }
+
+}
+
+
+

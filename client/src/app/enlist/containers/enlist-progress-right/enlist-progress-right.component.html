@@ -1,0 +1,74 @@
+<mat-toolbar class="title" *ngIf="enlist">
+  <a class="enlistTitle truncate" routerLink="/enlists/edit" [queryParams]="{enlistId:enlist.id}" fxFlex>
+    {{enlist.title}}
+  </a>
+
+  <button mat-icon-button [matMenuTriggerFor]="taskActionMenu" *ngIf="isManager$|async">
+    <mat-icon>build</mat-icon>
+  </button>
+  <mat-menu #taskActionMenu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="invite()">
+      <mat-icon>person_add</mat-icon>
+      <span translate="BUTTON.INVITE"></span>
+    </button>
+    <button mat-menu-item routerLink="/enlists/edit" [queryParams]="{enlistId:enlist.id}">
+      <mat-icon>mode_edit</mat-icon>
+      <span translate="BUTTON.EDIT-ENLIST"></span>
+    </button>
+    <button mat-menu-item (click)="generateTask()">
+      <mat-icon>done</mat-icon>
+      <span translate="BUTTON.GENERATE_TASK"></span>
+    </button>
+    <button type="button" mat-menu-item (click)="done()">
+      <mat-icon>done_all</mat-icon>
+      <span translate="BUTTON.DONE-ENLIST"></span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div fxFlex style="overflow-y: auto;" *ngIf="enlist">
+  <table class="formGroup">
+    <tr>
+      <td class="lable">{{'NAV.PAYMENTMERCHANT-MANAGE'|translate}}</td>
+      <td>
+        {{enlist?.paymentMerchant?.name}}
+        {{enlist.createDateTime|date:'yyyy-MM-dd HH:mm'}}
+      </td>
+    </tr>
+    <tr>
+      <td>{{'ENLIST.PARTICIPANT'|translate}}</td>
+      <td>
+        <button type="button" color="primary" mat-button (click)="showParticipants()">
+          ({{enlist.feedbacksCount}})
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <div class="pre-content" *ngIf="isShowViewMore$|async">
+    <jwjh-editor-view [content]="enlist.content"></jwjh-editor-view>
+    <jwjh-file-list [files]="enlist.attachments"></jwjh-file-list>
+  </div>
+  <div *ngIf="isShowViewMore$|async">
+    <button mat-button (click)="viewMore()" style="color: darkgrey;">展开</button>
+  </div>
+
+  <br/>
+  <mat-tab-group class="h40" dynamicHeight [selectedIndex]="rightTabIndex$|async" (focusChange)="focusChange($event)">
+    <mat-tab label="{{'COMMON.CONTENT'|translate}}/{{'COMMON.ATTACHMENT'|translate}}({{enlist?.attachmentsCount}})">
+      <jwjh-editor-view [content]="enlist.content"></jwjh-editor-view>
+      <jwjh-file-list [files]="enlist.attachments"></jwjh-file-list>
+    </mat-tab>
+
+    <mat-tab label="{{'ENLIST.FEEDBACK'|translate}}({{enlist?.feedbacksCount}})">
+      <div fxLayout="row" *ngIf="isShowFeedbackBtn$|async">
+        <button mat-button color="primary" (click)="updateFeedback()">
+          {{'BUTTON.ENLISTFEEDBACK'|translate}}
+        </button>
+      </div>
+      <jwjh-enlist-feedback-list [enlist]="enlist"
+                                 [enlistFeedbacks]="enlistFeedbacks$|async">
+      </jwjh-enlist-feedback-list>
+    </mat-tab>
+  </mat-tab-group>
+</div>

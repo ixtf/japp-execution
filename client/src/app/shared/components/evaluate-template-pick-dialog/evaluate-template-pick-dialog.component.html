@@ -1,0 +1,26 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{'EVALUATE_TEMPLATE'|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-nav-list fxFlex style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of (evaluateTemplates$|async)" (click)="select(it,$event)">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+    <button type="button" mat-button color="primary" (click)="update(it,$event)">
+      {{'COMMON.EDIT'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="update(null,$event)">
+    {{'COMMON.NEW'|translate}}
+  </button>
+</mat-dialog-actions>

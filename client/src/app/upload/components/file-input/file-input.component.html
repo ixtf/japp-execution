@@ -1,0 +1,17 @@
+<div class="tool">
+  <button type="button" (click)="fileInput.click()" mat-button color="primary">
+    <mat-icon>file_upload</mat-icon>
+    {{btnTxt|translate}}({{btnTooltip|translate}})
+  </button>
+  <input #fileInput type="file" ng2FileSelect [uploader]="uploader" [multiple]="multiple" hidden>
+</div>
+<span style="color: darkgrey;font-size: 12px">请耐心等待，当文件出现在下方列表，表示已经上传成功！</span>
+<!--<mat-progress-bar mode="indeterminate"></mat-progress-bar>-->
+<!--<mat-progress-bar mode="determinate" [value]="uploader.progress"></mat-progress-bar>-->
+<mat-nav-list>
+  <mat-list-item *ngFor="let it of (uploadFiles$|async)" (click)="remove(it,$event)">
+    <mat-icon mat-list-icon fontSet="fa" [fontIcon]="it|faFileIcon" color="primary"></mat-icon>
+    <h4 matLine>{{it?.fileName}}</h4>
+  </mat-list-item>
+</mat-nav-list>
+<div class="image-paste" (paste)="paste($event)" contenteditable="true" translate="TOOLTIP.IMAGE-PASTE" *ngIf="img2docx"></div>

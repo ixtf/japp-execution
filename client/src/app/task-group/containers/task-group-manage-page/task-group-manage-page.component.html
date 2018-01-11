@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <mat-list-item *ngFor="let taskGroup of (taskGroups$|async)"
+                 routerLink="/taskGroups/edit"
+                 [queryParams]="{id:taskGroup.id}">
+    <h1 matLine>{{taskGroup.name}}</h1>
+    <button type="button" color="primary" mat-button (click)="top(taskGroup);$event.stopPropagation();">
+      {{'COMMON.TO_TOP'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

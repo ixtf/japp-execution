@@ -1,0 +1,29 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{'人员选择'|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-nav-list dense fxFlex style="overflow-y: auto;" *ngIf="!multi">
+  <mat-list-item *ngFor="let it of source" (click)="pick(it)">
+    <img mat-list-avatar [src]="it|operatorAvatar">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+  </mat-list-item>
+</mat-nav-list>
+
+<mat-selection-list dense fxFlex style="overflow-y: auto;" #selectionList *ngIf="multi">
+  <mat-list-option *ngFor="let it of source" [value]="it">
+    <!--<img mat-list-avatar [src]="it|operatorAvatar">-->
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+  </mat-list-option>
+</mat-selection-list>
+<button type="button" color="primary" mat-button (click)="pickMulti()" *ngIf="multi">
+  {{'COMMON.FINISH'|translate}}
+</button>

@@ -1,0 +1,11 @@
+<button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="pick($event)">
+  {{'FEEDBACK_TEMPLATE'|translate}}
+</button>
+<mat-nav-list style="padding-top: 0" *ngIf="(feedbackTemplate$|async)">
+  <mat-list-item (click)="update($event)">
+    <h4 matLine>{{(feedbackTemplate$|async)?.name}}</h4>
+    <button type="button" mat-button color="warn" (click)="delete($event)">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

@@ -1,0 +1,4 @@
+<div class="feedback-field-value" *ngFor="let field of feedbackTemplate?.fields" fxLayout>
+  <label>{{field.name}}：</label>
+  <div fxFlex>{{getFieldValue(field)|async}}</div>
+</div>

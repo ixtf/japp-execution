@@ -1,0 +1,27 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title truncate">
+    {{enlist.title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form fxFlex [formGroup]="generateTaskForm" style="overflow-y: auto">
+  <mat-form-field>
+    <mat-select formControlName="taskGroup" [placeholder]="'选择组'|translate">
+      <mat-option [value]="it" *ngFor="let it of taskGroups$|async">{{it.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="taskGroupName" [placeholder]="'新建组名'|translate">
+  </mat-form-field>
+</form>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="submit()">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</mat-dialog-actions>

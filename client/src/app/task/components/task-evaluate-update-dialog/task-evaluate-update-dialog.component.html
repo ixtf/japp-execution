@@ -1,0 +1,30 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title truncate">
+    {{'TASK.EVALUATE'|translate}} — {{task.title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form fxFlex [formGroup]="form" style="overflow-y: auto">
+  <div formArrayName="fieldsValue">
+    <div *ngFor="let ctrl of fieldsValue.controls;let i=index;" [formGroupName]="i">
+      <mat-form-field>
+        <input type="number" matInput formControlName="value" [placeholder]="getFieldName(ctrl.get('id').value)">
+        <mat-error *ngIf="ctrl.get('value').hasError('required')">
+          <span translate>VALIDATORS.REQUIRED</span>
+        </mat-error>
+        <mat-error *ngIf="ctrl.get('value').hasError('min')">
+          <span translate [translateParams]="ctrl.get('value').getError('min')">VALIDATORS.MIN</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <jwjh-editor [formControl]="note"></jwjh-editor>
+
+  <button type="button" color="primary" mat-button (click)="submit()" [disabled]="form.pristine||form.invalid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>

@@ -1,0 +1,17 @@
+<button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="pick()">
+  {{'EXAM_QUESTION'|translate}}
+</button>
+<mat-nav-list style="padding-top: 0">
+  <mat-list-item *ngFor="let it of (examQuestions$|async)">
+    <h4 matLine>{{it.name}}</h4>
+    <button type="button" mat-button color="primary" (click)="showQuestion(it);$event.stopPropagation()">
+      {{'EXAM_QUESTION'|translate}}
+    </button>
+    <button type="button" mat-button color="primary" (click)="showAnswer(it);$event.stopPropagation()">
+      {{'EXAM_ANSWER'|translate}}
+    </button>
+    <button type="button" mat-button color="warn" (click)="delete(it)">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

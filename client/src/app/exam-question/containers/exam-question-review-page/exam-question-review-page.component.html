@@ -1,0 +1,57 @@
+<div fxLayout="column" fxFlex="50">
+  <mat-toolbar class="title">
+    <div fxFlex class="task-group-title truncate" [matMenuTriggerFor]="taskGroupsMenu">
+      {{(taskGroup$|async)?.name}}
+      <button type="button" mat-icon-button>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #taskGroupsMenu="matMenu" class="search-menu">
+        <div class="mat-menu-item search-header" (click)="$event.stopPropagation()">
+          <input #taskGroupFilterNameQ placeholder="{{'COMMON.SEARCH'|translate}}">
+        </div>
+        <a mat-menu-item (click)="changeTaskGroup(it)" *ngFor="let it of taskGroups$|async">
+          {{it?.name}}
+        </a>
+      </mat-menu>
+    </div>
+
+    <button type="button" (click)="toDestAll()" mat-icon-button [matTooltip]="'COMMON.SELECT_ALL'|translate">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-nav-list style="overflow-y: auto">
+    <mat-list-item (click)="toDest(task)" *ngFor="let task of sourceTasks$|async">
+      {{task.title}}
+    </mat-list-item>
+  </mat-nav-list>
+</div>
+
+<div class="right" fxLayout="column" fxFlex="50">
+  <mat-toolbar class="title">
+    <button type="button" (click)="toSourceAll()" mat-icon-button [matTooltip]="'COMMON.UNSELECT_ALL'|translate">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div fxFlex></div>
+
+    <button mat-button (click)="join()" *ngIf="!isManage" color="primary">
+      {{'NAV.EXAM_QUESTION_REVIEW'|translate}}
+    </button>
+    <button mat-button (click)="joinManage()" *ngIf="isManage" color="primary">
+      {{'NAV.EXAM_QUESTION_REVIEW'|translate}}
+    </button>
+    <!--<button mat-button [matMenuTriggerFor]="joinActionMenu" *ngIf="isManage">-->
+    <!--{{'NAV.EXAM_QUESTION_REVIEW'|translate}}-->
+    <!--</button>-->
+    <mat-menu #joinActionMenu="matMenu" xPosition="before">
+      <button type="button" mat-menu-item (click)="join(operator)" *ngFor="let operator of joinOperators$|async">
+        <span>{{operator.name}}</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+  <mat-nav-list style="overflow-y: auto">
+    <mat-list-item (click)="toSource(task)" *ngFor="let task of destTasks$|async">
+      {{task.title}}
+    </mat-list-item>
+  </mat-nav-list>
+</div>

@@ -1,0 +1,45 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title truncate">
+    {{'TASK.FEEDBACK'|translate}} — {{task.title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form fxFlex #form="ngForm" style="overflow-y: auto">
+  <mat-form-field *ngFor="let field of task.feedbackTemplate?.fields" [ngSwitch]="field.type" fxLayout>
+    <mat-select *ngSwitchCase="'BOOLEAN'" [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name">
+      <mat-option value="true">{{'COMMON.YES'|translate}}</mat-option>
+      <mat-option value="false">{{'COMMON.NO'|translate}}</mat-option>
+    </mat-select>
+
+    <input *ngSwitchCase="'NUMBER_LONG'" type="number" matInput [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name" [required]="field.required">
+
+    <input *ngSwitchCase="'NUMBER_DOUBLE'" type="number" step="0.001" matInput [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name" [required]="field.required">
+
+    <mat-select *ngSwitchCase="'SELECT_SINGLE'" [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name">
+      <mat-option [value]="it" *ngFor="let it of field.selectOptions">{{it}}</mat-option>
+    </mat-select>
+
+    <mat-select *ngSwitchCase="'SELECT_MULTIPLE'" multiple [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name">
+      <mat-option [value]="it" *ngFor="let it of field.selectOptions">{{it}}</mat-option>
+    </mat-select>
+
+    <input *ngSwitchDefault type="text" matInput [ngModel]="getFieldValue(field)" (ngModelChange)="setFieldValue(field,$event)" [name]="field.name" [placeholder]="field.name" [required]="field.required">
+  </mat-form-field>
+
+  <jwjh-editor [(ngModel)]="taskFeedback.note" name="content"></jwjh-editor>
+  <jwjh-file-input [(ngModel)]="taskFeedback.attachments" name="attachments"></jwjh-file-input>
+
+  <button type="button" color="primary" mat-button (click)="submit()" [disabled]="!form.form.valid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>
+
+<!--<mat-dialog-actions>-->
+<!--&lt;!&ndash;<span fxFlex></span>&ndash;&gt;-->
+<!--<button type="button" color="primary" mat-button (click)="submit()" [disabled]="!form.form.valid">-->
+<!--{{'COMMON.FINISH'|translate}}-->
+<!--</button>-->
+<!--</mat-dialog-actions>-->

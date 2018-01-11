@@ -1,0 +1,26 @@
+<button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="update(null,$event)">
+  {{'NAV.FIELD-CREATE'|translate}}
+</button>
+<mat-nav-list style="padding-top: 0">
+  <mat-list-item *ngFor="let field of (fields$|async)">
+    <h4 matLine>{{field.name}}</h4>
+    <button type="button" mat-icon-button [matMenuTriggerFor]="fieldMenu">
+      <mat-icon>build</mat-icon>
+    </button>
+    <mat-menu #fieldMenu="matMenu" xPosition="before">
+      <button type="button" style="color: #3f51b5;" mat-menu-item (click)="update(field,$event)">
+        {{'COMMON.EDIT'|translate}}
+      </button>
+      <button type="button" style="color: #f44336;" mat-menu-item (click)="delete(field,$event)">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+      <mat-divider></mat-divider>
+      <button type="button" mat-menu-item (click)="up(field,$event)">
+        {{'COMMON.MOVE-UP'|translate}}
+      </button>
+      <button type="button" mat-menu-item (click)="down(field,$event)">
+        {{'COMMON.MOVE-DOWN'|translate}}
+      </button>
+    </mat-menu>
+  </mat-list-item>
+</mat-nav-list>

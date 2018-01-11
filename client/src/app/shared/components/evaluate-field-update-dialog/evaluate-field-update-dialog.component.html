@@ -1,0 +1,19 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{title|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<form #form="ngForm" fxFlex>
+  <mat-form-field style="width: 100%">
+    <input matInput [(ngModel)]="field.name" name="name" required placeholder="{{'COMMON.NAME'|translate}}">
+  </mat-form-field>
+</form>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="submit()">
+    {{'COMMON.CONFIRM'|translate}}
+  </button>
+</mat-dialog-actions>

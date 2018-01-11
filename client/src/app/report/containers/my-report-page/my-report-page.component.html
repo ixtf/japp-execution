@@ -1,0 +1,84 @@
+<mat-toolbar class="title">
+  <div fxFlex class="task-group-title" [matMenuTriggerFor]="planMenu">
+    {{('MYREPORT.TASKFILER-ROLE-'+(taskFilterRole$|async))|translate}}
+    <button type="button" mat-icon-button>
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+    <mat-menu #planMenu="matMenu">
+      <button type="button" mat-menu-item *ngFor="let it of taskFilterRoles" (click)="setTaskFilterRole(it)">
+        {{('MYREPORT.TASKFILER-ROLE-'+it)|translate}}
+      </button>
+    </mat-menu>
+  </div>
+
+  <button type="button" mat-icon-button color="primary" (click)="pickTaskGroups()">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div fxFlex style="overflow-y: auto;">
+  <jwjh-chart [options]="chartOptions$|async"></jwjh-chart>
+
+  <mat-toolbar class="title filter-status">
+    <mat-tab-group class="h40" (focusChange)="setTaskFilterStatus($event)">
+      <mat-tab *ngFor="let it of taskFilterStatuses" label="{{('MYREPORT.TASKFILER-STATUS-'+it)|translate}}"></mat-tab>
+    </mat-tab-group>
+  </mat-toolbar>
+
+  <h3 matSubheader style="height: 48px; line-height: 16px; color: rgba(0,0,0,.54); margin: 0;">teste</h3>
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field>
+        <input matInput placeholder="First name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Age">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Personal data
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field>
+        <input matInput placeholder="First name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Age">
+      </mat-form-field>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <mat-list *ngFor="let taskGroup of (pickedTaskGroups$|async)">
+    <h3 matSubheader>{{taskGroup.name}}</h3>
+    <mat-list-item *ngFor="let task of (getTasksByTaskGroup(taskGroup)|async)">
+      <h1 matLine>{{task.title}}</h1>
+      <p matLine>
+        <span>{{task.startDate|date:'yyyy-MM-dd'}}</span>
+        <button (click)="onClick" mat-button color="primary">
+          {{'BUTTON.TASKFEEDBACK_CIRCS'|translate}}()
+        </button>
+        <button (click)="onClick" mat-button color="primary">
+          {{'BUTTON.TASKFEEDBACKCOMMENT_CIRCS'|translate}}()
+        </button>
+      </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  </mat-list>
+</div>

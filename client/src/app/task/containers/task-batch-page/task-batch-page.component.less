@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-flow: row;
+  flex: 1;
+  overflow: hidden;
+
+  div.task-group-title {
+    cursor: pointer;
+  }
+
+  div.right {
+    box-sizing: border-box;
+    border-left: 1px solid #e0e1e5;
+  }
+
+}
+
+:host /deep/ input.task-group-q {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 40px;
+}

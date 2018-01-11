@@ -1,0 +1,33 @@
+<mat-card class="task-feedback-comment mat-elevation-z0">
+  <mat-card-header>
+    <img mat-card-avatar [src]="taskFeedbackComment.creator|operatorAvatar">
+    <mat-card-title>
+      {{taskFeedbackComment.creator|operatorNickname:task|async}}
+      <span color="primary">的回复</span>
+    </mat-card-title>
+    <mat-card-subtitle>{{taskFeedbackComment.modifyDateTime|date:'yyyy-MM-dd HH:mm'}}</mat-card-subtitle>
+
+    <span fxFlex></span>
+    <button type="button" mat-icon-button (click)="delete(taskFeedbackComment)" *ngIf="showDelete$|async">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <jwjh-editor-view [content]="taskFeedbackComment.note"></jwjh-editor-view>
+    <jwjh-file-list [files]="taskFeedbackComment.attachments"></jwjh-file-list>
+    <mat-nav-list class="examQuestions" style="padding-top: 0">
+      <mat-list-item *ngFor="let examQuestion of taskFeedbackComment.examQuestions">
+        <h4 matLine>{{examQuestion.name}}</h4>
+        <button type="button" mat-button color="primary" (click)="showQuestion(examQuestion);$event.stopPropagation()">
+          {{'EXAM_QUESTION'|translate}}
+        </button>
+        <button type="button" mat-button color="primary" (click)="showAnswer(examQuestion);$event.stopPropagation()">
+          {{'EXAM_ANSWER'|translate}}
+        </button>
+        <button type="button" mat-button color="warn" (click)="delete(examQuestion);$event.stopPropagation()">
+          {{'COMMON.DELETE'|translate}}
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,30 @@
+<mat-table [dataSource]="paymentMerchantDataSource">
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="sub_mch_id">
+    <mat-header-cell *cdkHeaderCellDef>{{'sub_mch_id'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.sub_mch_id}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <a routerLink="/enlists/edit" [queryParams]="{paymentMerchantId:row.id}" mat-button color="primary">
+        {{'NAV.ENLIST-CREATE'|translate}}
+      </a>
+      <button (click)="showManagers(row)" mat-button color="primary">
+        管理员({{row.managers?.length}})
+      </button>
+      <button (click)="invite(row)" mat-button color="primary">
+        {{'BUTTON.FOLLOW_INVITE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

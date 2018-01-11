@@ -1,0 +1,52 @@
+<form fxFlex [formGroup]="enlistForm" (ngSubmit)="submit()" fxLayout="column">
+  <mat-form-field style="width: 100%">
+    <input matInput [value]="enlist?.paymentMerchant?.name" name="paymentmerchant" disabled required placeholder="{{'NAV.PAYMENTMERCHANT-MANAGE'|translate}}">
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="title" required placeholder="{{'COMMON.TITLE'|translate}}">
+    <mat-error *ngIf="title.errors?.required">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;margin-bottom: 8px;">
+    <input type="number" matInput formControlName="money" step="0.01" required min="0" placeholder="{{'ENLIST.MONEY'|translate}}">
+    <mat-hint align="end"><strong translate="TOOLTIP.ENLIST-MONEY"></strong></mat-hint>
+    <mat-error *ngIf="money.errors?.required">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+    <mat-error *ngIf="money.errors?.min">
+      <span translate [translateParams]="money.errors.min">VALIDATORS.MIN</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field style="width: 100%;margin-bottom: 8px;">
+    <input type="number" matInput formControlName="feedbackLimit" required min="0" placeholder="{{'ENLIST.FEEDBACKLIMIT'|translate}}">
+    <mat-hint align="end"><strong translate="TOOLTIP.ENLIST-FEEDBACKLIMIT"></strong></mat-hint>
+    <mat-error *ngIf="feedbackLimit.errors?.required">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+    <mat-error *ngIf="feedbackLimit.errors?.min">
+      <span translate [translateParams]="feedbackLimit.errors.min">VALIDATORS.MIN</span>
+    </mat-error>
+  </mat-form-field>
+
+  <jwjh-editor formControlName="content"></jwjh-editor>
+  <jwjh-file-input formControlName="attachments" name="attachments"></jwjh-file-input>
+
+  <jwjh-feedback-template-input formControlName="feedbackTemplate" required></jwjh-feedback-template-input>
+
+  <mat-form-field>
+    <input formControlName="startDate" [matDatepicker]="startDatePicker" matInput required placeholder="{{'COMMON.START_DATE'|translate}}">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <span fxFlex></span>
+  <div>
+    <button type="submit" color="primary" mat-raised-button [disabled]="enlistForm.pristine||enlistForm.invalid">
+      {{'COMMON.FINISH'|translate}}
+    </button>
+  </div>
+</form>

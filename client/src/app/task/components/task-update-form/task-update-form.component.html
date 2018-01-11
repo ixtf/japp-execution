@@ -1,0 +1,27 @@
+<form fxFlex [formGroup]="taskForm" (ngSubmit)="submit()" fxLayout="column">
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="title" required placeholder="{{'COMMON.TITLE'|translate}}">
+    <mat-error *ngIf="title.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <jwjh-editor formControlName="content"></jwjh-editor>
+  <jwjh-file-input formControlName="attachments"></jwjh-file-input>
+
+  <jwjh-feedback-template-input formControlName="feedbackTemplate"></jwjh-feedback-template-input>
+  <jwjh-evaluate-template-input formControlName="evaluateTemplate"></jwjh-evaluate-template-input>
+
+  <mat-form-field>
+    <input formControlName="startDate" [matDatepicker]="startDatePicker" matInput required placeholder="{{'COMMON.START_DATE'|translate}}">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+
+  <span fxFlex></span>
+  <div>
+    <button type="submit" color="primary" mat-raised-button [disabled]="taskForm.pristine||taskForm.invalid">
+      {{'COMMON.FINISH'|translate}}
+    </button>
+  </div>
+</form>

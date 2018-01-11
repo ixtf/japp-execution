@@ -1,0 +1,31 @@
+<nav mat-tab-nav-bar class="h40">
+  <a mat-tab-link
+     routerLink="/plans"
+     [queryParams]="{audited:true}"
+     [active]="audited$|async">
+    已审核
+  </a>
+  <a mat-tab-link
+     routerLink="/plans"
+     [queryParams]="{published:true}"
+     [active]="published$|async">
+    已发布
+  </a>
+  <a mat-tab-link
+     routerLink="/plans"
+     [queryParams]="{draft:true}"
+     [active]="draft$|async">
+    草稿箱
+  </a>
+</nav>
+
+<mat-nav-list fxFlex style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of plans$|async" routerLink="/plans/edit" [queryParams]="{id:it.id}">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+    <button type="button" mat-button color="primary" (click)="invite(it);$event.stopPropagation()">
+      {{'BUTTON.FOLLOW_INVITE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

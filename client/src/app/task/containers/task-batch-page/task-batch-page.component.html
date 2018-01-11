@@ -1,0 +1,64 @@
+<div fxLayout="column" fxFlex="50">
+  <mat-toolbar class="title">
+    <div fxFlex class="task-group-title truncate" [matMenuTriggerFor]="taskGroupsMenu">
+      {{(taskGroup$|async)?.name}}
+      <button type="button" mat-icon-button>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #taskGroupsMenu="matMenu" class="search-menu">
+        <div class="mat-menu-item search-header" (click)="$event.stopPropagation()">
+          <input #taskGroupFilterNameQ placeholder="{{'COMMON.SEARCH'|translate}}">
+        </div>
+        <a mat-menu-item (click)="changeTaskGroup(it)" *ngFor="let it of taskGroups$|async">
+          {{it?.name}}
+        </a>
+      </mat-menu>
+    </div>
+
+    <button type="button" (click)="toDestAll()" mat-icon-button [matTooltip]="'COMMON.SELECT_ALL'|translate">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-nav-list style="overflow-y: auto">
+    <mat-list-item (click)="toDest(task)" *ngFor="let task of sourceTasks$|async">
+      {{task.title}}
+    </mat-list-item>
+  </mat-nav-list>
+</div>
+
+<div class="right" fxLayout="column" fxFlex="50">
+  <mat-toolbar class="title">
+    <button type="button" (click)="toSourceAll()" mat-icon-button [matTooltip]="'COMMON.UNSELECT_ALL'|translate">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div fxFlex></div>
+
+    <button mat-button [matMenuTriggerFor]="taskActionMenu" color="primary">
+      {{'COMMON.OPERATE'|translate}}
+    </button>
+    <mat-menu #taskActionMenu="matMenu" xPosition="before">
+      <button type="button" mat-menu-item (click)="tasksInvite()">
+        <mat-icon>person_add</mat-icon>
+        <span translate="BUTTON.INVITE"></span>
+      </button>
+      <button type="button" mat-menu-item (click)="tasksFollowInvite()">
+        <mat-icon>accessibility</mat-icon>
+        <span translate="BUTTON.FOLLOW_INVITE"></span>
+      </button>
+      <button type="button" mat-menu-item (click)="updateNickname()">
+        <mat-icon>account_box</mat-icon>
+        <span translate="BUTTON.UPDATE-NICKNAME"></span>
+      </button>
+      <!--<button type="button" mat-menu-item (click)="done()">-->
+      <!--<mat-icon>done</mat-icon>-->
+      <!--<span translate="BUTTON.DONE-TASK"></span>-->
+      <!--</button>-->
+    </mat-menu>
+  </mat-toolbar>
+  <mat-nav-list style="overflow-y: auto">
+    <mat-list-item (click)="toSource(task)" *ngFor="let task of destTasks$|async">
+      {{task.title}}
+    </mat-list-item>
+  </mat-nav-list>
+</div>

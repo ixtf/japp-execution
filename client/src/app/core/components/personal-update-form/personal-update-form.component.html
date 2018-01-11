@@ -1,0 +1,42 @@
+<mat-tab-group *ngIf="operator">
+  <mat-tab label="{{'COMMON.PERSONAL'|translate}}">
+    <form fxFlex [formGroup]="infoForm" (ngSubmit)="updateInfo()" fxLayout="column">
+      <mat-form-field>
+        <input matInput formControlName="name" required placeholder="{{'COMMON.NAME'|translate}}">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="mobile" placeholder="{{'COMMON.MOBILE'|translate}}">
+      </mat-form-field>
+
+      <span fxFlex></span>
+      <div>
+        <button type="submit" color="primary" mat-raised-button [disabled]="infoForm.pristine||infoForm.invalid">
+          {{'COMMON.FINISH'|translate}}
+        </button>
+      </div>
+    </form>
+  </mat-tab>
+  <mat-tab label="{{'COMMON.CHANGE_PASSWORD'|translate}}">
+    <form fxFlex [formGroup]="passwordForm" (ngSubmit)="onUpdatInfo.emit(task)" fxLayout="column">
+      <mat-form-field>
+        <input matInput formControlName="oldPassword" required placeholder="{{'COMMON.PASSWORD_OLD'|translate}}">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="loginPassword" required placeholder="{{'COMMON.PASSWORD_NEW'|translate}}">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput formControlName="loginPasswordAgain" required placeholder="{{'COMMON.PASSWORD_AGAIN'|translate}}">
+      </mat-form-field>
+
+      <span fxFlex></span>
+      <div>
+        <button type="submit" color="primary" mat-raised-button [disabled]="passwordForm.pristine||passwordForm.invalid">
+          {{'COMMON.FINISH'|translate}}
+        </button>
+      </div>
+    </form>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,54 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{title|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<form #form="ngForm" fxFlex>
+  <mat-form-field style="width: 100%">
+    <input matInput [(ngModel)]="field.name" name="name" required placeholder="{{'COMMON.NAME'|translate}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select [(ngModel)]="field.type" name="type" required placeholder="{{'COMMON.TYPE'|translate}}">
+      <mat-option [value]="it.value" *ngFor="let it of types">{{it.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="field.type?.indexOf('SELECT')===0">
+    <button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="updateSelectOption(null,$event)">
+      *{{'NAV.SELECTOPTION-CREATE'|translate}}
+    </button>
+    <mat-nav-list style="padding-top: 0">
+      <mat-list-item *ngFor="let it of field.selectOptions">
+        <h4 matLine>{{it}}</h4>
+        <button type="button" mat-icon-button [matMenuTriggerFor]="fieldMenu">
+          <mat-icon>build</mat-icon>
+        </button>
+        <mat-menu #fieldMenu="matMenu" xPosition="before">
+          <button type="button" style="color: #3f51b5;" mat-menu-item (click)="updateSelectOption(it,$event)">
+            {{'COMMON.EDIT'|translate}}
+          </button>
+          <button type="button" style="color: #f44336;" mat-menu-item (click)="deleteSelectOption(it,$event)">
+            {{'COMMON.DELETE'|translate}}
+          </button>
+          <mat-divider></mat-divider>
+          <button type="button" mat-menu-item (click)="upSelectOption(it,$event)">
+            {{'COMMON.MOVE-UP'|translate}}
+          </button>
+          <button type="button" mat-menu-item (click)="downSelectOption(it,$event)">
+            {{'COMMON.MOVE-DOWN'|translate}}
+          </button>
+        </mat-menu>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+</form>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="submit()">
+    {{'COMMON.CONFIRM'|translate}}
+  </button>
+</mat-dialog-actions>

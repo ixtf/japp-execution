@@ -1,0 +1,16 @@
+<mat-nav-list style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of examQuestions" routerLink="/examQuestions/edit" [queryParams]="{examQuestionId:it.id}">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+    <button type="button" mat-button color="primary" (click)="showQuestion(it);$event.stopPropagation()">
+      {{'EXAM_QUESTION'|translate}}
+    </button>
+    <button type="button" mat-button color="primary" (click)="showAnswer(it);$event.stopPropagation()">
+      {{'EXAM_ANSWER'|translate}}
+    </button>
+    <button type="button" mat-button color="warn" (click)="delete(it);$event.stopPropagation()">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

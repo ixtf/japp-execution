@@ -1,0 +1,29 @@
+<form fxFlex [formGroup]="examQuestionForm" (ngSubmit)="submit()" fxLayout="column">
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="name" required placeholder="{{'COMMON.NAME'|translate}}">
+    <mat-error *ngIf="name.errors?.required">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <jwjh-file-input formControlName="question"
+                   [img2docx]="true"
+                   [multiple]="false"
+                   required
+                   btnTxt="BUTTON.EXAMQUESTION-QUESTION">
+  </jwjh-file-input>
+
+  <jwjh-file-input formControlName="answer"
+                   [img2docx]="true"
+                   [multiple]="false"
+                   required
+                   btnTxt="BUTTON.EXAMQUESTION-ANSWER">
+  </jwjh-file-input>
+
+  <span fxFlex></span>
+  <div>
+    <button type="submit" color="primary" mat-raised-button [disabled]="examQuestionForm.pristine||examQuestionForm.invalid">
+      {{'COMMON.FINISH'|translate}}
+    </button>
+  </div>
+</form>

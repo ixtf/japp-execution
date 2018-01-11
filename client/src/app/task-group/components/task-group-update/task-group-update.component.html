@@ -1,0 +1,20 @@
+<form fxFlex #form="ngForm" (ngSubmit)="onSubmit.emit(taskGroup)" fxLayout="column" *ngIf="taskGroup">
+  <mat-form-field style="width: 100%">
+    <input matInput [(ngModel)]="taskGroup.name" name="name" required placeholder="{{'COMMON.NAME'|translate}}">
+  </mat-form-field>
+
+  <jwjh-file-input [(ngModel)]="taskGroup.logo"
+                   name="logo"
+                   [multiple]="false"
+                   [allowedFileType]="['image']"
+                   [btnTxt]="btnTxtLogo">
+  </jwjh-file-input>
+  <jwjh-file-input [(ngModel)]="taskGroup.sign" [btnTxt]="btnTxtSign" [multiple]="false" name="sign"></jwjh-file-input>
+
+  <span fxFlex></span>
+  <div>
+    <button type="submit" color="primary" mat-raised-button [disabled]="!form.form.valid">
+      {{'COMMON.FINISH'|translate}}
+    </button>
+  </div>
+</form>

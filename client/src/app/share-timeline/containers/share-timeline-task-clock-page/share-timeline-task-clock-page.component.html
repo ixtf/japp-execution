@@ -1,0 +1,64 @@
+<div id="mcover">
+  <img src="./assets/img/share-it.png">
+</div>
+
+<mat-toolbar class="title truncate">
+  我正在参加 “{{(taskGroup$|async)?.name}}” 计划，共计{{totalCount$|async}}项
+</mat-toolbar>
+<table class="formGroup">
+  <tr>
+    <td class="lable">{{'TASK.PARTICIPANT'|translate}}</td>
+    <td>
+      {{(nickName$|async)}}
+    </td>
+  </tr>
+  <tr>
+    <td class="lable">已参加天数</td>
+    <td>
+      {{days$|async}}
+    </td>
+  </tr>
+  <tr>
+    <td class="lable">整体完成进度</td>
+    <td fxLayout fxLayoutAlign="start center">
+      <mat-progress-bar [value]="(percent$|async)*100" mode="determinate" style="min-width: 200px;"></mat-progress-bar>
+      {{percent$|async|percent:'.2-2':'zh'}}
+    </td>
+  </tr>
+  <tr>
+    <td class="lable">正在进行的计划</td>
+    <td>
+      {{(task$|async)?.title}}
+    </td>
+  </tr>
+  <!--<tr *ngIf="chartOptions$|async">-->
+  <!--<td class="lable">{{'TASK.EVALUATE'|translate}}</td>-->
+  <!--<td style="width: 100%;">-->
+  <!--<jwjh-chart [options]="chartOptions$|async" *ngIf="chartOptions$|async"></jwjh-chart>-->
+  <!--</td>-->
+  <!--</tr>-->
+</table>
+
+<jwjh-chart [options]="chartOptions$|async" *ngIf="chartOptions$|async"></jwjh-chart>
+
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      更多
+    </mat-panel-title>
+    <!--<mat-panel-title>-->
+    <!--{{'COMMON.MORE'|translate}}-->
+    <!--</mat-panel-title>-->
+    <!--<mat-panel-description>-->
+    <!--Type your name and age-->
+    <!--</mat-panel-description>-->
+  </mat-expansion-panel-header>
+
+  <mat-list>
+    <mat-list-item *ngFor="let task of tasks$|async">
+      {{task.title}}
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>
+
+<img [src]="signImgUrl$|async">

@@ -1,0 +1,99 @@
+<div id="mcover">
+  <img src="./assets/img/share-it.png">
+</div>
+
+<mat-toolbar class="title truncate" *ngIf="task">
+  {{task.title}}
+</mat-toolbar>
+
+<div fxFlex style="overflow-y: auto;" *ngIf="task">
+  <table class="formGroup">
+    <tr>
+      <td class="lable">{{'TASK.CREATOR'|translate}}</td>
+      <td>
+        {{task.charger.name}}
+        {{task.createDateTime|date:'yyyy-MM-dd HH:mm'}}
+      </td>
+    </tr>
+    <tr>
+      <td>{{'TASK.PARTICIPANT'|translate}}</td>
+      <td>
+        <button type="button" color="primary" mat-button>
+          参与({{task.participantsCount}})
+        </button>
+        <button type="button" color="primary" mat-button>
+          管理({{task.followersCount}})
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <div class="pre-content" *ngIf="isShowViewMore$|async">
+    <jwjh-editor-view [content]="task.content"></jwjh-editor-view>
+    <jwjh-file-list [files]="task.attachments"></jwjh-file-list>
+  </div>
+  <div *ngIf="isShowViewMore$|async">
+    <button mat-button (click)="viewMore()" style="color: darkgrey;">展开</button>
+  </div>
+
+  <br/>
+  <mat-tab-group class="h40" dynamicHeight [selectedIndex]="rightTabIndex$|async" (focusChange)="focusChange($event)">
+    <mat-tab label="{{'COMMON.CONTENT'|translate}}/{{'COMMON.ATTACHMENT'|translate}}({{task.attachmentsCount}})">
+      <jwjh-editor-view [content]="task.content"></jwjh-editor-view>
+      <jwjh-file-list [files]="task.attachments"></jwjh-file-list>
+    </mat-tab>
+
+    <mat-tab label="{{'TASK.FEEDBACK'|translate}}({{task.taskFeedbacksCount}})">
+      <div class="jwjh-task-feedback" *ngFor="let taskFeedback of taskFeedbacks">
+        <mat-card class="task-feedback mat-elevation-z2">
+          <mat-card-header>
+            <img mat-card-avatar [src]="taskFeedback.creator|operatorAvatar">
+            <mat-card-title>{{nickname(taskFeedback.creator)}}</mat-card-title>
+            <mat-card-subtitle>{{taskFeedback.modifyDateTime|date:'yyyy-MM-dd HH:mm'}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <jwjh-feedback-template-fields-value [feedbackTemplate]="task.feedbackTemplate"
+                                                 [fieldsValue]="taskFeedback.fieldsValue">
+            </jwjh-feedback-template-fields-value>
+
+            <jwjh-editor-view [content]="taskFeedback.note"></jwjh-editor-view>
+            <jwjh-file-list [files]="taskFeedback.attachments"></jwjh-file-list>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="task-feedback-comment mat-elevation-z0" *ngFor="let taskFeedbackComment of taskFeedback.taskFeedbackComments">
+          <mat-card-header>
+            <img mat-card-avatar [src]="taskFeedbackComment.creator|operatorAvatar">
+            <mat-card-title>
+              {{nickname(taskFeedbackComment.creator)}}
+              <span color="primary">的回复</span>
+            </mat-card-title>
+            <mat-card-subtitle>{{taskFeedbackComment.modifyDateTime|date:'yyyy-MM-dd HH:mm'}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <jwjh-editor-view [content]="taskFeedbackComment.note"></jwjh-editor-view>
+            <jwjh-file-list [files]="taskFeedbackComment.attachments"></jwjh-file-list>
+            <mat-nav-list class="examQuestions" style="padding-top: 0">
+              <mat-list-item *ngFor="let examQuestion of taskFeedbackComment.examQuestions">
+                <h4 matLine>{{examQuestion.name}}</h4>
+                <button type="button" mat-button color="primary" (click)="showQuestion(examQuestion);$event.stopPropagation()">
+                  {{'EXAM_QUESTION'|translate}}
+                </button>
+                <button type="button" mat-button color="primary" (click)="showAnswer(examQuestion);$event.stopPropagation()">
+                  {{'EXAM_ANSWER'|translate}}
+                </button>
+                <button type="button" mat-button color="warn" (click)="delete(examQuestion);$event.stopPropagation()">
+                  {{'COMMON.DELETE'|translate}}
+                </button>
+              </mat-list-item>
+            </mat-nav-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="{{'TASK.EVALUATE'|translate}}({{task.taskEvaluatesCount}})">
+      <!--<jwjh-task-evaluate-list [task]="task" [taskEvaluates]="taskEvaluates$|async"></jwjh-task-evaluate-list>-->
+    </mat-tab>
+  </mat-tab-group>
+</div>

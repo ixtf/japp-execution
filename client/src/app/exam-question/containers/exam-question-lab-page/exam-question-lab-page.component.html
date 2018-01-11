@@ -1,0 +1,36 @@
+<nav mat-tab-nav-bar class="h40">
+  <a mat-tab-link *ngFor="let it of (labs$|async)"
+     routerLink="/examQuestions/labs"
+     [queryParams]="{labId:it.id}"
+     [active]="it.id===(lab$|async).id">
+    {{it.name}}
+  </a>
+</nav>
+<div class="left-tools" fxLayout="row" fxLayoutAlign="start center">
+  <button type="button" mat-button color="primary" (click)="invite()">
+    {{'BUTTON.INVITE'|translate}}
+  </button>
+  <button type="button" mat-button color="primary" (click)="openOperatorDialog()">
+    管理人员({{(lab$|async)?.participants?.length}})
+  </button>
+  <button type="button" mat-button color="primary" (click)="updateExamQuestionLab()">
+    修改组信息
+  </button>
+
+  <span fxFlex></span>
+  <a class="new-actions" [matMenuTriggerFor]="newActionMenu">
+    + {{'COMMON.NEW'|translate}}
+  </a>
+  <mat-menu #newActionMenu="matMenu" xPosition="before">
+    <button type="button" mat-menu-item (click)="createExamQuestionLab()">
+      {{'NAV.EXAMQUESTIONLAB-CREATE'|translate}}
+    </button>
+    <button type="button" mat-menu-item routerLink="/examQuestions/edit" [queryParams]="{labId:(lab$|async)?.id}">
+      {{'NAV.EXAMQUESTION-CREATE'|translate}}
+    </button>
+  </mat-menu>
+</div>
+
+<jwjh-exam-question-list [examQuestions]="examQuestions$|async"></jwjh-exam-question-list>
+
+

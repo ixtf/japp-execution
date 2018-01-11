@@ -1,0 +1,17 @@
+<mat-card class="mat-elevation-z0" *ngIf="taskEvaluate">
+  <mat-card-header>
+    <img mat-card-avatar [src]="taskEvaluate.executor|operatorAvatar">
+    <mat-card-title>{{taskEvaluate.executor|operatorNickname:task|async}}</mat-card-title>
+    <mat-card-subtitle>{{taskEvaluate.modifyDateTime|date:'yyyy-MM-dd HH:mm'}}</mat-card-subtitle>
+
+    <span fxFlex></span>
+    <button mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <jwjh-editor-view [content]="taskEvaluate.note"></jwjh-editor-view>
+
+    <jwjh-chart [options]="chartOptions" *ngIf="chartOptions"></jwjh-chart>
+  </mat-card-content>
+</mat-card>

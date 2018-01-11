@@ -1,0 +1,9 @@
+<div fxLayout="column" fxFlex="{{leftFlex$|async}}" [hidden]="(leftFlex$|async)===0" style="position: relative;">
+  <!--<button mat-mini-fab class="example-fab" (click)="sidenav.toggle()">-->
+  <!--<mat-icon>add</mat-icon>-->
+  <!--</button>-->
+
+  <jwjh-enlist-progress-left fxFlex></jwjh-enlist-progress-left>
+</div>
+
+<jwjh-enlist-progress-right fxFlex="{{100-(leftFlex$|async)}}" [enlist]="enlist$|async"></jwjh-enlist-progress-right>

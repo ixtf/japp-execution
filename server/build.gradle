@@ -1,0 +1,65 @@
+allprojects {
+    group 'org.jzb.execution'
+    version '1.0'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    apply plugin: 'idea'
+    apply plugin: "maven"
+    apply plugin: 'maven-publish'
+    ext {
+        luceneVersion = '6.0.0'
+        jzbVersion = '1.0'
+        shiroVersion = '1.4.0'
+        libraries = [
+                shiro_web          : "org.apache.shiro:shiro-web:${shiroVersion}",
+                shiro_ehcache      : "org.apache.shiro:shiro-ehcache:${shiroVersion}",
+                okhttp             : 'com.squareup.okhttp3:okhttp:3.9.0',
+                resteasy_multipart : 'org.jboss.resteasy:resteasy-multipart-provider:3.0.16.Final',
+                jzb_jee            : "org.jzb:jzb-jee:${jzbVersion}",
+                jzb_poi            : "org.jzb:jzb-poi:${jzbVersion}",
+                jzb_img            : "org.jzb:jzb-img:${jzbVersion}",
+                weixin_mp          : "org.jzb.social-sdk:weixin-mp:${jzbVersion}",
+                weixin_open        : "org.jzb.social-sdk:weixin-open:${jzbVersion}",
+                weixin_pay_sl      : "org.jzb.social-sdk:weixin-pay-sl:${jzbVersion}",
+                javaee_api         : "javax:javaee-api:7.0",
+                hibernate_validator: "org.hibernate:hibernate-validator:5.4.1.Final",
+                jpa_modelgen       : "org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.7.0",
+        ]
+    }
+}
+apply plugin: 'java'
+apply plugin: 'war'
+war {
+    archiveName 'execution.war'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+dependencies {
+    compile libraries.jzb_jee,
+            libraries.jzb_poi,
+            libraries.jzb_img,
+            libraries.weixin_mp,
+            libraries.weixin_open,
+            libraries.weixin_pay_sl,
+            libraries.shiro_web,
+            libraries.shiro_ehcache,
+            'org.apache.tika:tika-core:1.16',
+            'commons-logging:commons-logging:1.2',
+            "org.apache.lucene:lucene-analyzers-smartcn:${luceneVersion}",
+            "org.apache.lucene:lucene-expressions:${luceneVersion}",
+            "org.apache.lucene:lucene-facet:${luceneVersion}",
+            "org.apache.lucene:lucene-queries:${luceneVersion}",
+            "org.apache.lucene:lucene-queryparser:${luceneVersion}",
+            libraries.okhttp
+    compileOnly libraries.javaee_api,
+            libraries.hibernate_validator,
+            libraries.jpa_modelgen,
+            libraries.resteasy_multipart
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

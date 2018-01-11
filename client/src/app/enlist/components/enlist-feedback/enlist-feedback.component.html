@@ -1,0 +1,29 @@
+<mat-card class="enlist-feedback mat-elevation-z2" *ngIf="enlistFeedback">
+  <span class="pay-info" *ngIf="!isPaySuccessed" translate>COMMON.NO_PAIED</span>
+  <span class="pay-info pay-successed" *ngIf="isPaySuccessed" translate>COMMON.PAIED</span>
+
+  <mat-card-header>
+    <img mat-card-avatar [src]="enlistFeedback.creator|operatorAvatar">
+    <mat-card-title>{{enlistFeedback.creator.name}}</mat-card-title>
+    <mat-card-subtitle>{{enlistFeedback.modifyDateTime|date:'yyyy-MM-dd HH:mm'}}</mat-card-subtitle>
+
+    <span fxFlex></span>
+    <a [href]="payHref" mat-button *ngIf="isShowPayHref$|async" color="warn">
+      进入支付
+    </a>
+    <button type="button" mat-icon-button (click)="edit()" *ngIf="isShowEdit$|async">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" mat-icon-button (click)="delete()" *ngIf="isShowDelete$|async">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <jwjh-feedback-template-fields-value [feedbackTemplate]="enlist?.feedbackTemplate"
+                                         [fieldsValue]="enlistFeedback.fieldsValue">
+    </jwjh-feedback-template-fields-value>
+
+    <jwjh-editor-view [content]="enlistFeedback.note"></jwjh-editor-view>
+    <jwjh-file-list [files]="enlistFeedback.attachments"></jwjh-file-list>
+  </mat-card-content>
+</mat-card>

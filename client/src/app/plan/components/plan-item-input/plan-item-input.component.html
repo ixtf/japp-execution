@@ -1,0 +1,19 @@
+<div>
+  <button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="update()">
+    新建子项
+  </button>
+  <button type="button" mat-button style="width: 150px;background-color: #eaeaea;" (click)="pick()">
+    选择计划
+  </button>
+</div>
+
+<mat-nav-list>
+  <mat-list-item *ngFor="let it of (planItems$|async)" (click)="update(it)">
+    <h3 matLine>
+      {{it.title}}
+    </h3>
+    <button type="button" mat-button color="warn" (click)="delete(it);$event.stopPropagation()">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

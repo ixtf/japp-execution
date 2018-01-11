@@ -1,0 +1,7 @@
+<mat-nav-list fxFlex style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of plans$|async" (click)="audit(it)">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+  </mat-list-item>
+</mat-nav-list>

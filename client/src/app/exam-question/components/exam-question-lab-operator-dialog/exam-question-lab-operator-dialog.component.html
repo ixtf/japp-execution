@@ -1,0 +1,20 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{(lab$|async).title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-list dense>
+  <mat-list-item *ngFor="let it of (lab$|async).participants">
+    <img mat-list-avatar [src]="it|operatorAvatar">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+    <button type="button" (click)="deleteParticipant(it)" mat-button color="warn">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-list>

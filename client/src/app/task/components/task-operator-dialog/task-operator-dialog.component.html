@@ -1,0 +1,38 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{(task$|async).title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-tab-group class="h40" [(selectedIndex)]="selectedIndex">
+  <mat-tab label="{{'TASK.PARTICIPANT'|translate}}({{(task$|async).participantsCount}})">
+    <mat-list dense>
+      <mat-list-item *ngFor="let it of (task$|async).participants">
+        <img mat-list-avatar [src]="it|operatorAvatar">
+        <h3 matLine>
+          {{it.name}}
+        </h3>
+        <button type="button" (click)="deleteParticipant(it,$event)" mat-button color="warn">
+          {{'COMMON.DELETE'|translate}}
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+
+  <mat-tab label="{{'TASK.FOLLOWER'|translate}}({{(task$|async).followersCount}})">
+    <mat-list dense>
+      <mat-list-item *ngFor="let it of (task$|async).followers">
+        <img mat-list-avatar [src]="it|operatorAvatar">
+        <h3 matLine>
+          {{it.name}}
+        </h3>
+        <button type="button" (click)="deleteFollower(it,$event)" mat-button color="warn">
+          {{'COMMON.DELETE'|translate}}
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-tab>
+</mat-tab-group>

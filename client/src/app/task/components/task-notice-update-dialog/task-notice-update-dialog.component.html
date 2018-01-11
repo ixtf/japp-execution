@@ -1,0 +1,59 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title truncate">
+    {{'TASK.NOTICE'|translate}} — {{task.title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form #form="ngForm">
+  <table>
+    <tr>
+      <td>
+        <mat-form-field>
+          <input name="noticeDate"
+                 matInput
+                 required
+                 [matDatepicker]="noticeDatePicker"
+                 [min]="minDate"
+                 [(ngModel)]="taskNotice.noticeDate"
+                 [placeholder]="'NOTICE-DATE'|translate">
+          <mat-datepicker-toggle matSuffix [for]="noticeDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #noticeDatePicker></mat-datepicker>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <mat-select name="noticeTime" [(ngModel)]="taskNotice.noticeTime" required [placeholder]="'NOTICE-TIME'|translate">
+            <mat-option *ngFor="let time of TIMES" [value]="time.value">
+              {{time.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+  <mat-form-field style="width: 100%">
+    <textarea name="content" matInput [(ngModel)]="taskNotice.content" placeholder="{{'COMMON.CONTENT'|translate}}"></textarea>
+  </mat-form-field>
+
+  <button color="primary" mat-button [matDialogClose]="taskNotice" (click)="submit()" [disabled]="!form.form.valid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>
+
+<mat-nav-list fxFlex style="overflow-y: auto;">
+  <mat-list-item *ngFor="let it of taskNotices$|async" (click)="content(it)">
+    <h3 matLine color="primary">
+      {{it.noticeDateTime|date:'yyyy-MM-dd HH:mm':'':'fr'}}
+    </h3>
+    <!--<button type="button" mat-button color="primary" (click)="content(it);$event.stopPropagation();" color="primary">-->
+    <!--{{'COMMON.CONTENT'|translate}}-->
+    <!--</button>-->
+    <button type="button" mat-button color="primary" (click)="delete(it);$event.stopPropagation();" color="warn">
+      {{'COMMON.DELETE'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

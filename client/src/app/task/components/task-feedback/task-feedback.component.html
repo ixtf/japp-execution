@@ -1,0 +1,30 @@
+<mat-card class="task-feedback mat-elevation-z2" *ngIf="taskFeedback">
+  <mat-card-header>
+    <img mat-card-avatar [src]="taskFeedback.creator|operatorAvatar">
+    <mat-card-title>{{taskFeedback.creator|operatorNickname:task|async}}</mat-card-title>
+    <mat-card-subtitle>{{taskFeedback.modifyDateTime|date:'yyyy-MM-dd HH:mm':'':'zh'}}</mat-card-subtitle>
+
+    <span fxFlex></span>
+    <button type="button" mat-icon-button (click)="edit()" *ngIf="isShowOnEdit">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button type="button" mat-icon-button (click)="comment()" *ngIf="isShowComment$|async">
+      <mat-icon>comment</mat-icon>
+    </button>
+    <button type="button" mat-icon-button (click)="delete()" *ngIf="isShowDelete$|async">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <jwjh-feedback-template-fields-value [feedbackTemplate]="task?.feedbackTemplate"
+                                         [fieldsValue]="taskFeedback.fieldsValue">
+    </jwjh-feedback-template-fields-value>
+
+    <jwjh-editor-view [content]="taskFeedback.note"></jwjh-editor-view>
+    <jwjh-file-list [files]="taskFeedback.attachments"></jwjh-file-list>
+  </mat-card-content>
+</mat-card>
+<jwjh-task-feedback-comment-list [task]="task"
+                                 [taskFeedback]="taskFeedback"
+                                 [taskFeedbackComments]="taskFeedback.taskFeedbackComments">
+</jwjh-task-feedback-comment-list>

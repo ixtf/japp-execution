@@ -1,0 +1,30 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{title|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<form #form="ngForm" fxFlex style="overflow-y: auto">
+  <mat-list>
+    <mat-list-item *ngFor="let operator of (operators$|async)">
+      <img mat-list-avatar [src]="operator|operatorAvatar">
+      <h3 matLine>
+        {{operator.name}}
+      </h3>
+      <p matLine [ngClass]="getNickNamesClass(operator)">
+        {{getOperatorNickNames(operator)|async}}
+      </p>
+      <button type="button" (click)="updateNickName(operator)" mat-button color="primary">
+        {{'COMMON.EDIT'|translate}}
+      </button>
+    </mat-list-item>
+  </mat-list>
+</form>
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="submit()">
+    {{'COMMON.CONFIRM'|translate}}
+  </button>
+</mat-dialog-actions>

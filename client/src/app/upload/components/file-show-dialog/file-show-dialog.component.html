@@ -1,0 +1,12 @@
+<mat-toolbar class="title">
+  <a fxFlex class="dialog-title truncate" (click)="download()" style="cursor: pointer">
+    {{'COMMON.DOWNLOAD'|translate}}
+  </a>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="file-content" [innerHTML]="html$|async" *ngIf="isHtml"></div>
+<video class="file-content" [src]="videoHSrc" playsinline controls autoplay="true" [height]="videoH" *ngIf="isVideo">
+</video>

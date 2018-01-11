@@ -1,0 +1,17 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{'BUTTON.SHOWUNFEEDBACKERS'|translate}}-{{(task$|async).title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-nav-list dense style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of (unfeedbackers$|async)">
+    <img mat-list-avatar [src]="it|operatorAvatar">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+  </mat-list-item>
+</mat-nav-list>

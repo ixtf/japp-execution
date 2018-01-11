@@ -1,0 +1,30 @@
+<mat-table [dataSource]="paymentMerchantDataSource">
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="sub_mch_id">
+    <mat-header-cell *cdkHeaderCellDef>{{'sub_mch_id'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.sub_mch_id}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button type="button" (click)="invite(row)" mat-button color="primary">
+        {{'BUTTON.FOLLOW_INVITE'|translate}}
+      </button>
+      <!--<a mat-button color="primary" routerLink="/admins/paymentMerchants/edit" [queryParams]="{id:row.id}">-->
+      <!--{{'COMMON.EDIT'|translate}}-->
+      <!--</a>-->
+      <button type="button" (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

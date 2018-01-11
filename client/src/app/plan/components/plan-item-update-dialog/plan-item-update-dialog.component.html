@@ -1,0 +1,29 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="form" (ngSubmit)="submit()" fxLayout="column" fxFlex style="overflow-y: auto">
+  <mat-form-field style="width: 100%">
+    <input matInput [formControl]="title" required [placeholder]="'COMMON.TITLE'|translate">
+    <mat-error *ngIf="title.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <jwjh-editor [formControl]="content"></jwjh-editor>
+  <jwjh-file-input [formControl]="attachments"></jwjh-file-input>
+
+  <jwjh-feedback-template-input [formControl]="feedbackTemplate"></jwjh-feedback-template-input>
+  <jwjh-evaluate-template-input [formControl]="evaluateTemplate"></jwjh-evaluate-template-input>
+</form>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="submit()" [disabled]="form.pristine||form.invalid">
+    {{'COMMON.CONFIRM'|translate}}
+  </button>
+</mat-dialog-actions>

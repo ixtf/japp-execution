@@ -1,0 +1,24 @@
+<div id="mcover">
+  <img src="./assets/img/share-it.png">
+</div>
+
+<mat-toolbar class="title truncate">
+  {{(taskGroup$|async)?.name}}
+</mat-toolbar>
+<table class="formGroup">
+  <tr>
+    <td class="lable">{{'TASK.CREATOR'|translate}}</td>
+    <td>
+      {{(taskGroup$|async)?.creator.name}}
+      {{(taskGroup$|async)?.createDateTime|date:'yyyy-MM-dd HH:mm'}}
+    </td>
+  </tr>
+</table>
+
+<jwjh-chart [options]="chartOptions$|async" *ngIf="chartOptions$|async"></jwjh-chart>
+
+<mat-list fxFlex style="overflow-y: auto;">
+  <mat-list-item *ngFor="let task of tasks$|async" [ngStyle]="{'background-color':(getTaskItemColor$(task)|async)}">
+    {{task.title}}
+  </mat-list-item>
+</mat-list>

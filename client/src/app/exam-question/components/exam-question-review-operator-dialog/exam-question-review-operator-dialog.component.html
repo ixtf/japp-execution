@@ -1,0 +1,20 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    <!--{{(lab$|async).title}}-->
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-list dense style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of operators">
+    <img mat-list-avatar [src]="it|operatorAvatar">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+    <button type="button" (click)="join(it)" mat-button color="primary">
+      {{'NAV.EXAM_QUESTION_REVIEW'|translate}}
+    </button>
+  </mat-list-item>
+</mat-list>

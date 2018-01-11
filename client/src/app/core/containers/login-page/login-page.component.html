@@ -1,0 +1,10 @@
+<div id="login-container">
+  <mat-tab-group>
+    <mat-tab label="{{'NAV.WXLOGIN'|translate}}" position="0">
+      <jwjh-login-weixin></jwjh-login-weixin>
+    </mat-tab>
+    <mat-tab label="{{'NAV.PASSWORDLOGIN'|translate}}" position="0">
+      <jwjh-login-form (submitted)="login($event)"></jwjh-login-form>
+    </mat-tab>
+  </mat-tab-group>
+</div>

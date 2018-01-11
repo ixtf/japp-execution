@@ -1,0 +1,33 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{plan.name}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<jwjh-editor-view [content]="plan.note"></jwjh-editor-view>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let planItem of plan.items">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{planItem.title}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <jwjh-editor-view [content]="planItem.content"></jwjh-editor-view>
+    <jwjh-file-list [files]="planItem.attachments"></jwjh-file-list>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="audit()">
+    通过
+  </button>
+  <button type="button" color="warn" mat-button (click)="unAudit()">
+    拒绝
+  </button>
+</mat-dialog-actions>

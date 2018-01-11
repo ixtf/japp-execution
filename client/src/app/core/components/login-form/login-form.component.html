@@ -1,0 +1,15 @@
+<form #form="ngForm" (ngSubmit)="submit()" fxLayout="column" style="margin-top: 16px">
+  <mat-form-field floatPlaceholder="never">
+    <mat-icon matPrefix>phone</mat-icon>
+    <input matInput type="text" [(ngModel)]="authenticate.loginId" name="loginId" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-icon matPrefix>lock</mat-icon>
+    <input matInput type="password" [(ngModel)]="authenticate.loginPassword" name="loginPassword" required>
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button color="primary" [disabled]="!form.valid">
+    {{'COMMON.LOGIN'|translate}}
+  </button>
+</form>

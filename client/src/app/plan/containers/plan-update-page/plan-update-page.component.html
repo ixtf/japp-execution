@@ -1,0 +1,19 @@
+<form fxFlex [formGroup]="form" (ngSubmit)="submit()" fxLayout="column">
+  <mat-form-field style="width: 100%">
+    <input matInput formControlName="name" required placeholder="{{'COMMON.TITLE'|translate}}">
+    <mat-error *ngIf="name.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <jwjh-editor [formControl]="note"></jwjh-editor>
+
+  <jwjh-plan-item-input [formControl]="items"></jwjh-plan-item-input>
+
+  <span fxFlex></span>
+  <div>
+    <button type="submit" color="primary" mat-raised-button [disabled]="form.pristine||form.invalid">
+      {{'COMMON.FINISH'|translate}}
+    </button>
+  </div>
+</form>

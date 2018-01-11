@@ -1,0 +1,250 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "library";
+
+body {
+  font-family: 'microsoft yahei', Roboto, Noto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  font-size: 14px;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+}
+
+.mat-sidenav-content.mat-drawer-content {
+  display: flex !important;
+  flex-flow: column !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.jwjh-page-row {
+  .jwjh-page-F(row)
+}
+
+.jwjh-page,
+.jwjh-page-column {
+  .jwjh-page-F(column)
+}
+
+.badge {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  color: white;
+  background-color: #e91e63;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.my-add {
+  position: fixed !important;
+  top: 40px;
+  right: 16px;
+  @media (max-width: 600px) {
+    top: 36px;
+  }
+}
+
+table.formGroup {
+  tr {
+    min-height: 30px;
+    height: 30px;
+    line-height: 30px;
+
+    td:first-child {
+      min-width: 100px;
+      width: 100px;
+      min-height: 100%;
+      color: #999;
+      font-size: 14px;
+      line-height: 30px;
+    }
+
+    button:not(.mat-icon-button) {
+      background-color: #eaeaea;
+    }
+  }
+}
+
+.mat-card.task-feedback {
+  border-radius: 0;
+
+  jwjh-editor-view {
+    color: gray !important;
+  }
+  jwjh-file-list {
+    margin-left: -24px;
+    margin-right: -24px;
+  }
+}
+
+.jwjh-task-feedback {
+  margin-bottom: 8px;
+}
+
+.mat-card.task-feedback-comment {
+  background-color: #f5f7f8;
+  border-radius: 0;
+  color: #ff9917 !important;
+
+  jwjh-editor-view {
+    color: #ff9917 !important;
+  }
+  jwjh-file-list,
+  .examQuestions {
+    margin-left: -24px;
+    margin-right: -24px;
+  }
+}
+
+.cdk-overlay-pane.my-dialog {
+  .mat-dialog-container {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    overflow: hidden;
+    max-width: 100vw;
+    max-height: 100vh;
+    min-width: 320px;
+    min-height: 480px;
+    padding: 0;
+    @media (max-width: 600px) {
+      height: 100vh;
+      width: 100vw;
+      min-width: 100vw;
+      min-height: 100vh;
+    }
+
+    .mat-toolbar {
+      .dialog-title {
+        color: #44a8d5;
+      }
+      button.close {
+        padding: 0;
+        margin: 0;
+        min-height: 24px;
+        min-width: 24px;
+        width: 24px;
+        height: 24px;
+        .mat-button-wrapper {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .mat-dialog-actions {
+    flex-shrink: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.mat-menu-panel.search-menu {
+  .mat-menu-content {
+    padding-top: 0;
+  }
+
+  div.mat-menu-item.search-header {
+    position: relative;
+    display: block;
+    padding: 0 0 0 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    &:focus,
+    &:hover {
+      background: none;
+    }
+    input {
+      border: none;
+      outline: none;
+      height: 100%;
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
+
+.mat-toolbar.title {
+  .mat-toolbar-hF(@titleH);
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  color: black;
+  font-size: 16px;
+}
+
+.mat-tab-group.h40 {
+  .mat-tab-group-hF(40px);
+  .mat-tab-label {
+    min-width: 130px;
+  }
+  .mat-ink-bar {
+    background-color: rgb(255, 64, 129);
+  }
+}
+
+.mat-tab-nav-bar.h40 {
+  .mat-ink-bar {
+    background-color: rgb(255, 64, 129);
+  }
+}
+
+div.click-box {
+  box-sizing: border-box;
+  background-color: #eaeaea;
+  text-align: center;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+a.new-actions {
+  display: block;
+  background-color: #ff9917;
+  color: #fff !important;
+  font-size: 14px;
+  line-height: 30px;
+  border-radius: 3px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+// froala css
+.fr-box.fr-basic.fr-top {
+  padding: 0;
+
+  .fr-toolbar {
+    border-top: none;
+    filter: progid:DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=#ffffff, endColorStr=#ececec); /*IE 6 7 8*/
+    background: -ms-linear-gradient(top, #fff, #ececec); /* IE 10 */
+    background: -moz-linear-gradient(top, #ffffff, #ececec); /*火狐*/
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#ececec)); /*谷歌*/
+  }
+  .fr-wrapper {
+    min-height: 100px;
+    box-shadow: none !important;
+    //border-bottom: 1px solid #ddd
+  }
+}
+
+.fr-box.fr-inline {
+  padding: 0px 16px;
+}
+
+jwjh-editor-view .fr-view img {
+  cursor: pointer;
+}

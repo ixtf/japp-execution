@@ -1,0 +1,61 @@
+<div fxLayout="column" fxFlex="{{taskListFlex$|async}}" [hidden]="(taskListFlex$|async)===0">
+  <mat-toolbar class="title">
+    <div fxFlex class="task-group-title truncate" [matMenuTriggerFor]="taskGroupsMenu">
+      {{(taskGroup$|async)?.name}}
+      <button type="button" mat-icon-button>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #taskGroupsMenu="matMenu" class="search-menu">
+        <div class="mat-menu-item search-header" (click)="$event.stopPropagation()">
+          <input (keyup)="onTaskGroupFilterNameQ.emit($event.target.value)" placeholder="{{'COMMON.SEARCH'|translate}}">
+        </div>
+        <a mat-menu-item
+           *ngFor="let it of taskGroups$|async"
+           routerLink="/tasks/progress"
+           [queryParams]="{taskGroupId:it?.id}">
+          {{it?.name}}
+        </a>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <div class="left-tools" fxLayout="row" fxLayoutAlign="start center">
+    <button type="button" mat-button color="primary" [matMenuTriggerFor]="taskListAtionMenu">
+      {{'COMMON.SORTBY'|translate}}/
+      {{'COMMON.FILTERBY'|translate}}
+    </button>
+    <mat-menu #taskListAtionMenu="matMenu" xPosition="after">
+      <button mat-menu-item (click)="sortTasksByModifyDateTimeDesc()">
+        {{'BUTTON.SORTBY-MODIFYDATETIME-DESC'|translate}}
+      </button>
+      <button mat-menu-item (click)="sortTasksByTitle()">
+        {{'BUTTON.SORTBY-TITLE'|translate}}
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="filterByAll()">
+        {{'COMMON.ALL'|translate}}
+      </button>
+      <!--<button mat-menu-item (click)="filterByUnfeedbak()">-->
+      <!--{{'BUTTON.FILTERBY-UNFEEDBACK'|translate}}-->
+      <!--</button>-->
+    </mat-menu>
+
+    <span fxFlex></span>
+    <a class="new-actions" [matMenuTriggerFor]="newActionMenu">
+      + {{'COMMON.NEW'|translate}}
+    </a>
+    <mat-menu #newActionMenu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="/tasks/edit" [queryParams]="{taskGroupId:(taskGroup$|async)?.id}">
+        {{'NAV.TASK-CREATE'|translate}}
+      </button>
+      <button mat-menu-item routerLink="/taskGroups/edit">{{'NAV.TASKGROUP-CREATE'|translate}}</button>
+      <button mat-menu-item routerLink="/taskGroups">{{'NAV.TASKGROUP-UPDATE'|translate}}</button>
+      <button mat-menu-item routerLink="/plans">{{'BUTTON.PUBLISH-PLAN'|translate}}</button>
+    </mat-menu>
+  </div>
+  <mat-divider></mat-divider>
+
+  <jwjh-task-progress-left fxFlex></jwjh-task-progress-left>
+</div>
+
+<jwjh-task-progress-right fxFlex="{{100-(taskListFlex$|async)}}" [task]="task$|async"></jwjh-task-progress-right>

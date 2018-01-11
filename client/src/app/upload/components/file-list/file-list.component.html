@@ -1,0 +1,10 @@
+<mat-nav-list *ngIf="count>0">
+  <h3 matSubheader *ngIf="isShowHead">{{'COMMON.ATTACHMENT'|translate}}</h3>
+  <mat-list-item *ngFor="let file of files" (click)="clickFile(file)">
+    <mat-icon mat-list-icon fontSet="fa" [fontIcon]="file|faFileIcon" color="primary"></mat-icon>
+    <h4 matLine>{{file.fileName}}</h4>
+    <button type="button" (click)="download(file);$event.stopPropagation();" mat-button color="primary">
+      {{'COMMON.DOWNLOAD'|translate}}
+    </button>
+  </mat-list-item>
+</mat-nav-list>

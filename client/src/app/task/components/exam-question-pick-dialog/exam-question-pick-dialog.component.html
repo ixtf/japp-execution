@@ -1,0 +1,25 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{'EXAM_QUESTION'|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-tab-group class="h40" (selectChange)="selectLab($event)" fxFlex>
+  <mat-tab *ngFor="let lab of (labs$|async)" [label]="lab.name" id="{{lab.id}}">
+    <mat-selection-list>
+      <mat-list-option (click)="clickExamQuestion(it)" [value]="it" [selected]="isSelected(it)|async" *ngFor="let it of (examQuestions$|async)">
+        {{it.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-tab>
+</mat-tab-group>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button [matDialogClose]="selecteds$|async">
+    {{'COMMON.CONFIRM'|translate}}
+  </button>
+</mat-dialog-actions>

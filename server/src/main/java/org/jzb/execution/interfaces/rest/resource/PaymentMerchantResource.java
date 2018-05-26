@@ -55,6 +55,6 @@ public class PaymentMerchantResource {
     @Path("{id}/managers/{managerId}")
     @DELETE
     public void get(@Context SecurityContext sc, @Valid @NotBlank @PathParam("id") String id, @Valid @NotBlank @PathParam("managerId") String managerId) throws Exception {
-        paymentMerchantService.deleteManager(sc.getUserPrincipal(), id, managerId);
+        paymentMerchantService.removeManager(sc.getUserPrincipal(), id, managerId);
     }
 }

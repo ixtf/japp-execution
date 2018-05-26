@@ -65,8 +65,11 @@ public class PaymentMerchantServiceImpl implements PaymentMerchantService {
     @Override
     public void removeManager(Principal principal, String id, String managerId) {
         final PaymentMerchant paymentMerchant = paymentMerchantRepository.find(id);
-        Set<Operator> managers = J.emptyIfNull(paymentMerchant.getManagers())
-                .parallelStream()
+        if (!paymentMerchant.isManager(principal)) {
+            throw new JNonAuthorizationError();
+        }
+        final Set<Operator> managers = J.emptyIfNull(paymentMerchant.getManagers())
+                .stream()
                 .filter(it -> !it.getId().equals(managerId))
                 .collect(Collectors.toSet());
         paymentMerchant.setManagers(managers);
@@ -86,19 +89,5 @@ public class PaymentMerchantServiceImpl implements PaymentMerchantService {
         invite.setTicket(res.ticket());
         invite.setExpireSeconds(res.expire_seconds());
         return paymentMerchantRepository.save(invite);
-    }
-
-    @Override
-    public void deleteManager(Principal principal, String id, String managerId) throws Exception {
-        final PaymentMerchant paymentMerchant = paymentMerchantRepository.find(id);
-        if (!paymentMerchant.isManager(principal)) {
-            throw new JNonAuthorizationError();
-        }
-        final Set<Operator> managers = J.emptyIfNull(paymentMerchant.getManagers())
-                .stream()
-                .filter(it -> !it.getId().equals(managerId))
-                .collect(Collectors.toSet());
-        paymentMerchant.setManagers(managers);
-        paymentMerchantRepository.save(paymentMerchant);
     }
 }

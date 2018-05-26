@@ -40,6 +40,10 @@ public class AdminResource {
     private AdminChannelResource adminChannelResource;
     @Inject
     private AdminPlanResource adminPlanResource;
+    @Inject
+    private AdminTaskResource adminTaskResource;
+    @Inject
+    private AdminRedEnvelopeOrganizationResource adminRedEnvelopeOrganizationResource;
 
     private void checkAdmin(Principal principal) {
         final Operator operator = operatorRepository.find(principal);
@@ -61,9 +65,21 @@ public class AdminResource {
     }
 
     @Path("plans")
-    public AdminPlanResource auditPlan(@Context SecurityContext sc) throws Exception {
+    public AdminPlanResource plans(@Context SecurityContext sc) throws Exception {
         checkAdmin(sc.getUserPrincipal());
         return adminPlanResource;
+    }
+
+    @Path("tasks")
+    public AdminTaskResource tasks(@Context SecurityContext sc) throws Exception {
+        checkAdmin(sc.getUserPrincipal());
+        return adminTaskResource;
+    }
+
+    @Path("redEnvelopeOrganizations")
+    public AdminRedEnvelopeOrganizationResource redEnvelopeOrganizations(@Context SecurityContext sc) throws Exception {
+        checkAdmin(sc.getUserPrincipal());
+        return adminRedEnvelopeOrganizationResource;
     }
 
 }

@@ -44,6 +44,9 @@
       <a mat-list-item routerLink="/admins/plans" routerLinkActive="active" [hidden]="!(isAdmin$|async)">
         {{'NAV.PLAN-AUDIT'|translate}}
       </a>
+      <a mat-list-item routerLink="/admins/tasks" routerLinkActive="active" [hidden]="!(isAdmin$|async)">
+        所有计划
+      </a>
       <a mat-list-item href="http://www.wjh001.com/execution/api/auth/logout">
         {{'COMMON.LOGOUT'|translate}}
       </a>

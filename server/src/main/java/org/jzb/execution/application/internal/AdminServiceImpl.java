@@ -58,4 +58,9 @@ public class AdminServiceImpl implements AdminService {
     public void deleteChannel(Principal principal, String id) {
         channelRepository.delete(id);
     }
+
+    @Override
+    public void deleteRedEnvelopeOrganization(Principal principal, String id) {
+
+    }
 }

@@ -46,7 +46,6 @@ export class UtilService {
     let href = isIos() ? sessionStorage.getItem('weixin_first_url') : location.href;
     href = location.href;
     const configFun = () => this.http.post(`${baseApiUrl}/auth/wxJsConfig`, {data: href}).toPromise().then((config: any) => {
-      console.log('test', config);
       wx.config({
         appId: config.appId,
         timestamp: config.timestamp,

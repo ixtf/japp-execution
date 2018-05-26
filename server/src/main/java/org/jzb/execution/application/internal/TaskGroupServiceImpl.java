@@ -63,6 +63,7 @@ public class TaskGroupServiceImpl implements TaskGroupService {
                 .map(uploadFileRepository::find)
                 .orElse(null);
         o.setSign(sign);
+        o.setSignString(command.getSignString());
         Operator operator = operatorRepository.find(principal);
         o._loginfo(operator);
         return taskGroupRepository.save(o);

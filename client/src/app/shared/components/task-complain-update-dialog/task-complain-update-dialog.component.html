@@ -1,0 +1,20 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{task.title}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form fxFlex [formGroup]="form" (ngSubmit)="submit()" fxLayout="column">
+
+  <jwjh-editor [formControl]="content" fxFlex></jwjh-editor>
+
+  <mat-dialog-actions>
+    <span fxFlex></span>
+    <button type="submit" color="primary" mat-raised-button [disabled]="form.pristine||form.invalid">
+      {{'COMMON.CONFIRM'|translate}}
+    </button>
+  </mat-dialog-actions>
+</form>

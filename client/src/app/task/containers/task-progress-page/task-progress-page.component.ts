@@ -1,17 +1,22 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {MatDialog} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/scan';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
-import {DefaultCompare} from '../../../core/services/util.service';
-import {coreIsMobile} from '../../../core/store';
+import {DefaultCompare, UtilService} from '../../../core/services/util.service';
+import {coreAuthOperator, coreIsMobile} from '../../../core/store';
+import {TaskGroupSignViewDialogComponent} from '../../../shared/components/task-group-sign-view-dialog/task-group-sign-view-dialog.component';
 import {Task} from '../../../shared/models/task';
-import {TaskGroup} from '../../../shared/models/task-group';
+import {MyTaskGroup, TaskGroup} from '../../../shared/models/task-group';
 import {
-  taskProgressPageActions, taskProgressPageTask, taskProgressPageTaskGroup,
+  taskProgressPageActions,
+  taskProgressPageTask,
+  taskProgressPageTaskGroup,
   taskProgressPageTaskGroups,
 } from '../../store';
 
@@ -28,14 +33,19 @@ export class TaskProgressPageComponent implements OnDestroy {
   onTaskGroupFilterNameQ = new EventEmitter<string>();
   taskGroups$: Observable<TaskGroup[]>;
   taskGroup$: Observable<TaskGroup>;
+  taskGroupHasSignString$: Observable<boolean>;
   task$: Observable<Task>;
   taskListFlex$: Observable<number>;
   private subscriptions = [];
 
   constructor(private store: Store<any>,
-              private route: ActivatedRoute) {
+              private dialog: MatDialog,
+              private route: ActivatedRoute,
+              private router: Router,
+              private utilService: UtilService) {
     this.taskGroups$ = store.select(taskProgressPageTaskGroups);
     this.taskGroup$ = store.select(taskProgressPageTaskGroup);
+    this.taskGroupHasSignString$ = this.taskGroup$.map(it => !!(it && it.signString));
     this.task$ = store.select(taskProgressPageTask);
 
     this.taskListFlex$ = combineLatest(this.task$, store.select(coreIsMobile), (task, isMobile) => {
@@ -60,6 +70,23 @@ export class TaskProgressPageComponent implements OnDestroy {
         .map(q => new taskProgressPageActions.SetTaskGroupFilterNameQ(q))
         .subscribe(it => this.store.dispatch(it))
     );
+  }
+
+  viewSignString(): void {
+    this.taskGroup$.take(1)
+      .filter(it => it.id !== MyTaskGroup.id)
+      .subscribe(taskGroup => {
+        if (taskGroup.signString) {
+          TaskGroupSignViewDialogComponent.open(this.dialog, {taskGroup});
+        } else {
+          this.store.select(coreAuthOperator).take(1)
+            .filter(it => it.id === taskGroup.modifier.id)
+            .switchMap(() => this.utilService.showConfirm({textContent: '创建目标？'}))
+            .subscribe(() => {
+              this.router.navigate(['taskGroups', 'edit'], {queryParams: {id: taskGroup.id}});
+            });
+        }
+      });
   }
 
   sortTasksByModifyDateTimeDesc(): void {

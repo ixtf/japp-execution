@@ -65,4 +65,6 @@ public interface TaskService {
     void updateNickNames(Principal principal, NickNamesUpdateCommand command) throws Exception;
 
     void top(Principal principal, String id);
+
+    void quit(Principal principal, String id);
 }

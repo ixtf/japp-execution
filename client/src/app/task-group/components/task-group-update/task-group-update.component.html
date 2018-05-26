@@ -9,7 +9,8 @@
                    [allowedFileType]="['image']"
                    [btnTxt]="btnTxtLogo">
   </jwjh-file-input>
-  <jwjh-file-input [(ngModel)]="taskGroup.sign" [btnTxt]="btnTxtSign" [multiple]="false" name="sign"></jwjh-file-input>
+  <jwjh-editor [(ngModel)]="taskGroup.signString" name="signString" [placeholder]="'TOOLTIP.TASKGROUP_SIGNSTRING'|translate"></jwjh-editor>
+  <!--<jwjh-file-input [(ngModel)]="taskGroup.sign" [btnTxt]="btnTxtSign" [multiple]="false" name="sign"></jwjh-file-input>-->
 
   <span fxFlex></span>
   <div>

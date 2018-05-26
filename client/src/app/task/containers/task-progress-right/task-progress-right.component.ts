@@ -10,6 +10,7 @@ import {UtilService} from '../../../core/services/util.service';
 import {WeixinService} from '../../../core/services/weixin.service';
 import {coreAuthOperator} from '../../../core/store/index';
 import {PickOperatorDialogComponent} from '../../../shared/components/pick-operator-dialog/pick-operator-dialog.component';
+import {TaskComplainUpdateDialogComponent} from '../../../shared/components/task-complain-update-dialog/task-complain-update-dialog.component';
 import {Task} from '../../../shared/models/task';
 import {TaskEvaluate} from '../../../shared/models/task-evaluate';
 import {TaskFeedback} from '../../../shared/models/task-feedback';
@@ -26,8 +27,14 @@ import {TaskUnfeedbackerDialogComponent} from '../../components/task-unfeedbacke
 import {TaskBatchService} from '../../services/task-batch.service';
 import {TaskService} from '../../services/task.service';
 import {
-  taskActions, taskEvaluateActions, taskFeedbackActions, taskFeedbackCommentActions, taskProgressPageActions,
-  taskProgressPageStateRightTabIndex, taskProgressPageTaskEvaluates, taskProgressPageTaskFeedbacks,
+  taskActions,
+  taskEvaluateActions,
+  taskFeedbackActions,
+  taskFeedbackCommentActions,
+  taskProgressPageActions,
+  taskProgressPageStateRightTabIndex,
+  taskProgressPageTaskEvaluates,
+  taskProgressPageTaskFeedbacks,
   taskProgressPageTaskGroup,
 } from '../../store';
 
@@ -160,11 +167,6 @@ export class TaskProgressRightComponent implements OnDestroy {
     // this.store.dispatch(new taskProgressPageActions.ShowMoveDialog({task: this.task}));
   }
 
-  share() {
-    this.weixinService.imagePreview(null);
-    // this.weixinService.shareTimelineTask(this.task);
-  }
-
   done() {
     this.utilService.showConfirm().subscribe(() => this.store.dispatch(new taskActions.Done(this.task.id)));
   }
@@ -186,6 +188,10 @@ export class TaskProgressRightComponent implements OnDestroy {
           this.store.dispatch(new taskActions.GetSuccess(this.task));
         });
     }
+  }
+
+  createTaskComplain() {
+    TaskComplainUpdateDialogComponent.create(this.dialog, {task: this.task});
   }
 
   quit() {
@@ -210,7 +216,6 @@ export class TaskProgressRightComponent implements OnDestroy {
       .filter(it => it)
       .subscribe((res: TaskEvaluate) => {
         this.store.dispatch(new taskEvaluateActions.Save(this.task.id, res));
-        console.log(res);
       });
   }
 

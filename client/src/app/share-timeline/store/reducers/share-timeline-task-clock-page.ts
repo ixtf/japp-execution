@@ -72,6 +72,9 @@ export const getChartOptions = createSelector(getShareOperator, getTask, (operat
     return null;
   }
   const taskEvaluate = task.taskEvaluates.find(it => it.executor.id === operator.id);
+  if (!taskEvaluate) {
+    return null;
+  }
   const options = taskEvaluateChartOptions(task, taskEvaluate);
   return Object.assign(options, {title: {text: taskEvaluate.creator.name + ' 的评价'}});
 });

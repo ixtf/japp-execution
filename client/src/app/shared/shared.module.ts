@@ -4,10 +4,27 @@ import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatExpansionModule,
-  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatPaginatorModule,
-  MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSidenavModule, MatSnackBarModule, MatTableModule,
-  MatTabsModule, MatToolbarModule, MatTooltipModule
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
@@ -90,6 +107,7 @@ export const IMPORTS = [
     MyPaginatorIntl,
     FeedbackTemplateService,
     EvaluateTemplateService,
+    // {provide: MatPaginatorIntl, useClass: MyPaginatorIntl},
     // {provide: DateAdapter, useValue: MyDateAdapter},
   ]
 })

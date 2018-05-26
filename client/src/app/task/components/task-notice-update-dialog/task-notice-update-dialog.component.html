@@ -7,17 +7,15 @@
   </button>
 </mat-toolbar>
 
-<form #form="ngForm">
+<form [formGroup]="form" (ngSubmit)="submit()">
   <table>
     <tr>
       <td>
         <mat-form-field>
-          <input name="noticeDate"
+          <input [formControl]="noticeDate"
                  matInput
-                 required
                  [matDatepicker]="noticeDatePicker"
                  [min]="minDate"
-                 [(ngModel)]="taskNotice.noticeDate"
                  [placeholder]="'NOTICE-DATE'|translate">
           <mat-datepicker-toggle matSuffix [for]="noticeDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #noticeDatePicker></mat-datepicker>
@@ -25,9 +23,9 @@
       </td>
       <td>
         <mat-form-field>
-          <mat-select name="noticeTime" [(ngModel)]="taskNotice.noticeTime" required [placeholder]="'NOTICE-TIME'|translate">
-            <mat-option *ngFor="let time of TIMES" [value]="time.value">
-              {{time.viewValue}}
+          <mat-select [formControl]="noticeTime" [placeholder]="'NOTICE-TIME'|translate">
+            <mat-option *ngFor="let time of TIMES" [value]="time">
+              {{time}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -35,17 +33,27 @@
     </tr>
   </table>
 
-  <mat-form-field style="width: 100%">
-    <textarea name="content" matInput [(ngModel)]="taskNotice.content" placeholder="{{'COMMON.CONTENT'|translate}}"></textarea>
+  <mat-checkbox [formControl]="noticeAllCtrl">所有人</mat-checkbox>
+  <mat-form-field>
+    <mat-select [formControl]="receivers" multiple [compareWith]="compareId">
+      <mat-option *ngFor="let operator of task.participants" [value]="operator">
+        {{operator|operatorNickname:task|async}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="receivers.hasError('required')">{{''|translate}}</mat-error>
   </mat-form-field>
 
-  <button color="primary" mat-button [matDialogClose]="taskNotice" (click)="submit()" [disabled]="!form.form.valid">
+  <mat-form-field style="width: 100%">
+    <textarea [formControl]="content" matInput placeholder="{{'COMMON.CONTENT'|translate}}"></textarea>
+  </mat-form-field>
+
+  <button color="primary" mat-button [disabled]="!form.valid">
     {{'COMMON.FINISH'|translate}}
   </button>
 </form>
 
 <mat-nav-list fxFlex style="overflow-y: auto;">
-  <mat-list-item *ngFor="let it of taskNotices$|async" (click)="content(it)">
+  <mat-list-item *ngFor="let it of taskNotices$|async" (click)="showContent(it)">
     <h3 matLine color="primary">
       {{it.noticeDateTime|date:'yyyy-MM-dd HH:mm':'':'fr'}}
     </h3>

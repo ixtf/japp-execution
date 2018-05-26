@@ -22,9 +22,13 @@
   <div class="left-tools" fxLayout="row" fxLayoutAlign="start center">
     <button type="button" mat-button color="primary" [matMenuTriggerFor]="taskListAtionMenu">
       {{'COMMON.SORTBY'|translate}}/
-      {{'COMMON.FILTERBY'|translate}}
+      {{'COMMON.FILTERBY'|translate}} 目标
     </button>
     <mat-menu #taskListAtionMenu="matMenu" xPosition="after">
+      <button type="button" mat-menu-item (click)="viewSignString()" color="primary">
+        {{'目标'|translate}}
+      </button>
+      <mat-divider></mat-divider>
       <button mat-menu-item (click)="sortTasksByModifyDateTimeDesc()">
         {{'BUTTON.SORTBY-MODIFYDATETIME-DESC'|translate}}
       </button>

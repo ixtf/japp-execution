@@ -47,6 +47,8 @@ public class WeixinMsgService {
     private PaymentMerchantRepository paymentMerchantRepository;
     @Inject
     private EnlistRepository enlistRepository;
+    @Inject
+    private RedEnvelopeOrganizationRepository redEnvelopeOrganizationRepository;
 
     public void handle(MsgPushed msgPushed) throws Exception {
         if (msgPushed.isEvt_subscribe()) {
@@ -114,7 +116,16 @@ public class WeixinMsgService {
             lab = examQuestionLabRepository.save(lab);
             String content = lab.getName() + "\n" + "成功加入!";
             mpClient.msgKf(msgPushed.getFromUserName()).text().content(content).call();
-        } else if (PAYMENTMERCHANT_INVITE.scene_id() == key) {
+        } else if (REDENVELOPEORGANIZATION_INVITE.scene_id() == key) {
+            final RedEnvelopeOrganizationInvite invite = redEnvelopeOrganizationRepository.findRedEnvelopeOrganizationInviteByTicket(ticket);
+            RedEnvelopeOrganization redEnvelopeOrganization = invite.getRedEnvelopeOrganization();
+            Set<Operator> managers = Sets.newHashSet(operator);
+            managers.addAll(J.emptyIfNull(redEnvelopeOrganization.getManagers()));
+            redEnvelopeOrganization.setManagers(managers);
+            redEnvelopeOrganization = redEnvelopeOrganizationRepository.save(redEnvelopeOrganization);
+            String content = "红包发放组织：" + redEnvelopeOrganization.getName() + "\n" + "成功加入!";
+            mpClient.msgKf(msgPushed.getFromUserName()).text().content(content).call();
+        }  else if (PAYMENTMERCHANT_INVITE.scene_id() == key) {
             final PaymentMerchantInvite invite = paymentMerchantRepository.findPaymentMerchantInviteByTicket(ticket);
             PaymentMerchant paymentMerchant = invite.getPaymentMerchant();
             Set<Operator> managers = Sets.newHashSet(operator);

@@ -19,4 +19,6 @@ public interface AdminService {
     Channel update(Principal principal, String id, ChannelUpdateCommand command);
 
     void deleteChannel(Principal principal, String id);
+
+    void deleteRedEnvelopeOrganization(Principal principal, String id);
 }

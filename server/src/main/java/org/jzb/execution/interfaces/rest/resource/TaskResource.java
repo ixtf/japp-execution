@@ -59,6 +59,8 @@ public class TaskResource {
     private TaskService taskService;
     @Inject
     private ApplicationEvents applicationEvents;
+    @Inject
+    private TaskComplainRepository taskComplainRepository;
 
     @POST
     public Task create(@Context SecurityContext sc, @Valid @NotNull TaskUpdateCommand command) throws Exception {
@@ -148,6 +150,12 @@ public class TaskResource {
     @PUT
     public void weixinShareTimeline(@Context SecurityContext sc, @Valid @NotBlank @PathParam("id") String id) throws Exception {
         taskService.weixinShareTimeline(sc.getUserPrincipal(), id);
+    }
+
+    @Path("{id}/quit")
+    @PUT
+    public void quit(@Context SecurityContext sc, @Valid @NotBlank @PathParam("id") String id) throws Exception {
+        taskService.quit(sc.getUserPrincipal(), id);
     }
 
     @Path("{id}/finish")
@@ -294,5 +302,11 @@ public class TaskResource {
                     return node;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Path("{id}/taskComplains")
+    @GET
+    public Collection<TaskComplain> listTaskComplain(@Valid @NotBlank @PathParam("id") String id) {
+        return taskComplainRepository.queryByTaskId(id).collect(Collectors.toList());
     }
 }

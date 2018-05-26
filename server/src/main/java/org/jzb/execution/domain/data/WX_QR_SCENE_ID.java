@@ -12,7 +12,8 @@ public enum WX_QR_SCENE_ID {
     TASKS_INVITE(5),
     //邀请成为计划管理员，加入 follower，多计划
     TASKS_FOLLOW_INVITE(6),
-    ENLIST_INVITE(7);
+    ENLIST_INVITE(7),
+    REDENVELOPEORGANIZATION_INVITE(8);
 
     private final int scene_id;
 

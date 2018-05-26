@@ -37,7 +37,7 @@ export class TaskEffects {
           this.utilService.showSuccess();
           return new taskActions.GetSuccess(task);
         })
-        .catch(error => of());
+        .catch(error => of(new ShowError(error)));
     });
 
   @Effect()
@@ -49,7 +49,7 @@ export class TaskEffects {
           this.utilService.showSuccess();
           return new taskActions.GetSuccess(res);
         })
-        .catch(error => of());
+        .catch(error => of(new ShowError(error)));
     });
 
   @Effect()
@@ -59,7 +59,7 @@ export class TaskEffects {
       return this.taskService.read(action.taskId)
         .delay(3000)
         .map(() => new taskActions.GetOperatorContextData(action.taskId))
-        .catch(error => of());
+        .catch(error => of(new ShowError(error)));
     });
 
   @Effect()
@@ -86,6 +86,15 @@ export class TaskEffects {
     .exhaustMap((action: taskActions.Delete) => {
       return this.taskService.delete(action.taskId)
         .map(() => new taskActions.DeleteSuccess(action.taskId))
+        .catch(error => of(new ShowError(error)));
+    });
+
+  @Effect()
+  quit$: Observable<Action> = this.actions$
+    .ofType<taskActions.Quit>(taskActions.QUIT)
+    .exhaustMap(action => {
+      return this.taskService.quit(action.taskId)
+        .map(() => new taskActions.QuitSuccess(action.taskId))
         .catch(error => of(new ShowError(error)));
     });
 

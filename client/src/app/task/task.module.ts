@@ -3,6 +3,8 @@ import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {ChartModule} from '../chart/chart.module';
 import {EditorModule} from '../editor/editor.module';
+import {TaskComplainUpdateDialogModule} from '../shared/components/task-complain-update-dialog/task-complain-update-dialog.component';
+import {TaskGroupSignViewDialogModule} from '../shared/components/task-group-sign-view-dialog/task-group-sign-view-dialog.component';
 import {SharedModule} from '../shared/shared.module';
 import {TaskGroupService} from '../task-group/services/task-group.service';
 import {UploadModule} from '../upload/upload.module';
@@ -77,6 +79,8 @@ export const COMPONENTS = [
     TaskRoutingModule,
     StoreModule.forFeature(featureName, reducers),
     EffectsModule.forFeature(featureEffects),
+    TaskGroupSignViewDialogModule,
+    TaskComplainUpdateDialogModule,
   ],
   entryComponents: ENTRYCOMPONENTS,
   declarations: COMPONENTS,

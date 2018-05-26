@@ -1,0 +1,19 @@
+<mat-toolbar class="title">
+  <a class="taskTitle truncate" routerLink="/tasks/progress" [queryParams]="{taskId:(task$|async)?.id}" fxFlex>
+    {{(task$|async)?.title}}
+  </a>
+</mat-toolbar>
+
+<mat-expansion-panel *ngFor="let taskComplain of taskComplains$|async">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{taskComplain.modifier.name}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{taskComplain.modifyDateTime|date:'yyyy-MM-dd HH:mm':'':'zh'}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <jwjh-editor-view [content]="taskComplain.content"></jwjh-editor-view>
+</mat-expansion-panel>
+

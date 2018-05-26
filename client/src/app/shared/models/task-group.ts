@@ -5,6 +5,7 @@ export class TaskGroup extends LogableEntity {
   name: string;
   logo: UploadFile;
   sign: UploadFile;
+  signString: string;
 
   static toEntities(taskGroups, entities?: { [id: string]: TaskGroup }): { [id: string]: TaskGroup } {
     taskGroups = taskGroups || [];

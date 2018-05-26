@@ -20,6 +20,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.security.Principal;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -184,8 +185,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Principal principal, String id) {
         Task task = taskRepository.find(id);
-        if (task.getCharger().getId().equals(principal.getName()))
+        if (task.getCharger().getId().equals(principal.getName())){
             taskRepository.delete(id);
+        }
     }
 
     @Override
@@ -446,8 +448,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTaskEvaluate(Principal principal, String taskEvaluateId) throws Exception {
         TaskEvaluate taskEvaluate = taskEvaluateRepository.find(taskEvaluateId);
-        if (taskEvaluate.getCreator().getId().equals(principal.getName()))
+        if (taskEvaluate.getCreator().getId().equals(principal.getName())){
             taskEvaluateRepository.delete(taskEvaluateId);
+        }
     }
 
     @Override
@@ -496,9 +499,9 @@ public class TaskServiceImpl implements TaskService {
                 .map(EntityDTO::getId)
                 .map(taskRepository::find)
                 .forEach(task -> {
-                    checkUpdateAuth(principal, task);
                     task.relateOperators()
                             .filter(it -> nickNameMap.containsKey(it.getId()))
+                            .filter(it -> it.isSelf(principal) || task.isManager(principal))
                             .forEach(operator -> {
                                 TaskOperatorContextData contextData = taskOperatorContextDataRepository.find(task, operator);
                                 contextData.setNickName(nickNameMap.get(operator.getId()));
@@ -513,6 +516,23 @@ public class TaskServiceImpl implements TaskService {
         checkUpdateAuth(principal, task);
         final Operator operator = operatorRepository.find(principal);
         task._loginfo(operator);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void quit(final Principal principal, String id) {
+        final Task task = taskRepository.find(id);
+        final Predicate<Operator> predicate = it -> !Objects.equals(it.getId(), principal.getName());
+        final Collection<Operator> participants = J.emptyIfNull(task.getParticipants())
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toSet());
+        task.setParticipants(participants);
+        final Collection<Operator> followers = J.emptyIfNull(task.getFollowers())
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toSet());
+        task.setFollowers(followers);
         taskRepository.save(task);
     }
 }

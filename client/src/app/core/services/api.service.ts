@@ -6,6 +6,8 @@ import {baseApiUrl} from '../../../environments/environment';
 import {Channel} from '../../shared/models/channel';
 import {Plan} from '../../shared/models/plan';
 import {PlanInvite} from '../../shared/models/plan-invite';
+import {Task} from '../../shared/models/task';
+import {TaskComplain} from '../../shared/models/task-complain';
 import {TaskGroup} from '../../shared/models/task-group';
 
 @Injectable()
@@ -15,6 +17,14 @@ export class ApiService {
 
   listTaskGroup(cond: {}): Observable<TaskGroup> {
     return this.http.get(``);
+  }
+
+  createTaskComplain(taskId: string, taskComplain: TaskComplain): Observable<TaskComplain> {
+    return this.http.post<TaskComplain>(`${baseApiUrl}/taskComplains?taskId=${taskId}`, taskComplain);
+  }
+
+  updateTaskComplain(id: string, taskComplain: TaskComplain): Observable<TaskComplain> {
+    return this.http.put<TaskComplain>(`${baseApiUrl}/taskComplains/${id}`, taskComplain);
   }
 
   savePlan(plan: Plan): Observable<Plan> {
@@ -59,5 +69,14 @@ export class ApiService {
 
   listChannel(): Observable<Channel[]> {
     return this.http.get<Channel[]>(`${baseApiUrl}/channels`);
+  }
+
+  listTask_Admin(params: HttpParams): Observable<{ tasks: Task[], count: number, first: number, pageSize: number }> {
+    return this.http.get<{ tasks: Task[], count: number, first: number, pageSize: number }>(`${baseApiUrl}/admin/tasks`, {params});
+  }
+
+  listTaskComplain_Admin(taskId: string): Observable<{ task: Task, taskComplains: TaskComplain[] }> {
+    const params = new HttpParams().set('taskId', taskId);
+    return this.http.get<{ task: Task, taskComplains: TaskComplain[] }>(`${baseApiUrl}/admin/taskComplains`, {params});
   }
 }

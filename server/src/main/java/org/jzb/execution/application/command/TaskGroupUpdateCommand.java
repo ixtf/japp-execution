@@ -13,6 +13,7 @@ public class TaskGroupUpdateCommand implements Serializable {
     private String name;
     private EntityDTO logo;
     private EntityDTO sign;
+    private String signString;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class TaskGroupUpdateCommand implements Serializable {
 
     public void setSign(EntityDTO sign) {
         this.sign = sign;
+    }
+
+    public String getSignString() {
+        return signString;
+    }
+
+    public void setSignString(String signString) {
+        this.signString = signString;
     }
 }

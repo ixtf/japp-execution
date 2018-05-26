@@ -1,3 +1,6 @@
+plugins {
+    id "com.palantir.docker" version "0.19.2"
+}
 allprojects {
     group 'org.jzb.execution'
     version '1.0'
@@ -8,10 +11,8 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: "maven"
     apply plugin: 'maven-publish'
+    apply plugin: 'com.palantir.docker'
     ext {
-        luceneVersion = '6.0.0'
-        jzbVersion = '1.0'
-        shiroVersion = '1.4.0'
         libraries = [
                 shiro_web          : "org.apache.shiro:shiro-web:${shiroVersion}",
                 shiro_ehcache      : "org.apache.shiro:shiro-ehcache:${shiroVersion}",
@@ -62,4 +63,14 @@ dependencies {
             libraries.jpa_modelgen,
             libraries.resteasy_multipart
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+/**
+ * 打包 docker 准备
+ */
+docker {
+    dependsOn build
+    name "wjh/execution"
+    noCache true
+    files "build/libs/${project.name}.war"
 }

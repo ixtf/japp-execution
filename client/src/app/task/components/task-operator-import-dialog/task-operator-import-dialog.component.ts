@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {createSelector, Store} from '@ngrx/store';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/reduce';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
@@ -67,9 +67,9 @@ export class TaskOperatorImportDialogComponent implements OnDestroy {
 
     this.subscriptions.push(
       this.onTaskGroupFilterNameQ
-        .debounceTime(300)
+        .debounceTime(500)
         .distinctUntilChanged()
-        .subscribe(taskGroupFilterNameQ => this.state$.next({...this.state$.value, taskGroupFilterNameQ}))
+        .subscribe((taskGroupFilterNameQ: string) => this.state$.next({...this.state$.value, taskGroupFilterNameQ}))
     );
     dialogRef.beforeClose().subscribe(() => {
       if (this.followers.length > 0) {
@@ -89,7 +89,7 @@ export class TaskOperatorImportDialogComponent implements OnDestroy {
     let taskGroupEntities$: Observable<{ [id: string]: TaskGroup }> = of(this.state$.value.taskGroupEntities);
     if (Object.keys(this.state$.value.taskGroupEntities).length === 0) {
       taskGroupEntities$ = this.taskGroupService.list()
-        .flatMap(taskGroups => [MyTaskGroup].concat(taskGroups || []))
+        .mergeMap(taskGroups => [MyTaskGroup].concat(taskGroups || []))
         .reduce((acc: { [id: string]: TaskGroup }, cur: TaskGroup) => {
           acc[cur.id] = cur;
           return acc;
@@ -104,11 +104,7 @@ export class TaskOperatorImportDialogComponent implements OnDestroy {
   }
 
   showOperators(task: Task) {
-    this.dialog.open(TaskOperatorDialogComponent, {
-      disableClose: true,
-      panelClass: 'my-dialog',
-      data: {task}
-    });
+    TaskOperatorDialogComponent.showParticipants(this.dialog, {task});
   }
 
   importOperators(task: Task) {

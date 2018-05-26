@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.security.Principal;
+import java.util.Objects;
 
 /**
  * @author jzb
@@ -27,6 +28,11 @@ public class Operator extends AbstractEntity {
     private String name;
     private String nickName;
     private String avatar;
+
+    @JsonIgnore
+    public boolean isSelf(Principal principal) {
+        return Objects.equals(id, principal.getName());
+    }
 
     public static boolean isAdmin(Principal principal) {
         return principal.getName().equals("N8nKbXJtvBfzarKt3piZ34") || principal.getName().equals("Jmg62HxQV2mzUGM8Qqnq1U");
@@ -59,14 +65,6 @@ public class Operator extends AbstractEntity {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override

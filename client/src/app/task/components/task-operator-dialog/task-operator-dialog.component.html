@@ -13,7 +13,7 @@
       <mat-list-item *ngFor="let it of (task$|async).participants">
         <img mat-list-avatar [src]="it|operatorAvatar">
         <h3 matLine>
-          {{it.name}}
+          {{it|operatorNickname:(task$|async)|async}}
         </h3>
         <button type="button" (click)="deleteParticipant(it,$event)" mat-button color="warn">
           {{'COMMON.DELETE'|translate}}
@@ -27,7 +27,7 @@
       <mat-list-item *ngFor="let it of (task$|async).followers">
         <img mat-list-avatar [src]="it|operatorAvatar">
         <h3 matLine>
-          {{it.name}}
+          {{it|operatorNickname:(task$|async)|async}}
         </h3>
         <button type="button" (click)="deleteFollower(it,$event)" mat-button color="warn">
           {{'COMMON.DELETE'|translate}}

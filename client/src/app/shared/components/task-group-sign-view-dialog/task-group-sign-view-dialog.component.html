@@ -1,0 +1,14 @@
+<mat-toolbar class="title">
+  <div fxFlex class="dialog-title">
+    {{taskGroup.name}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<jwjh-editor-view [content]="taskGroup.signString" fxFlex></jwjh-editor-view>
+
+<button type="button" color="primary" mat-button (click)="edit()" *ngIf="isManager$()|async">
+  {{'COMMON.EDIT'|translate}}
+</button>

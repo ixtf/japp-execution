@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {Actions, Effect} from '@ngrx/effects';
+import {ROUTER_NAVIGATION, RouterNavigationAction} from '@ngrx/router-store';
 import {Action, Store} from '@ngrx/store';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/exhaustMap';
@@ -14,17 +15,32 @@ import {UtilService} from '../../../core/services/util.service';
 import {ShowError, ShowWxQrcoode} from '../../../core/store/actions/core';
 import {PaymentMerchantService} from '../../services/payment-merchant.service';
 import {paymentMerchantManagePageActions} from '../../store';
+import {paymentMerchantManagePageState} from '../index';
 
 @Injectable()
 export class PaymentMerchantManagePageEffects {
   @Effect()
   init$: Observable<Action> = this.actions$
-    .ofType(paymentMerchantManagePageActions.INIT)
-    .exhaustMap(() => {
+    .ofType<RouterNavigationAction>(ROUTER_NAVIGATION)
+    .filter(action => {
+      const {event} = action.payload;
+      return event.url.startsWith('/admins/paymentMerchants');
+    })
+    .withLatestFrom(this.store.select(paymentMerchantManagePageState))
+    .switchMap(a => {
+      const [action, state] = a;
       return this.paymentMerchantService.list()
         .map(res => new paymentMerchantManagePageActions.InitSuccess(res))
         .catch(error => of(new ShowError(error)));
     });
+  // @Effect()
+  // init$: Observable<Action> = this.actions$
+  //   .ofType(paymentMerchantManagePageActions.INIT)
+  //   .exhaustMap(() => {
+  //     return this.paymentMerchantService.list()
+  //       .map(res => new paymentMerchantManagePageActions.InitSuccess(res))
+  //       .catch(error => of(new ShowError(error)));
+  //   });
 
   @Effect()
   invite$: Observable<Action> = this.actions$

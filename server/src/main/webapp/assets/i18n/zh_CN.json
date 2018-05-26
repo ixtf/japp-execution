@@ -140,6 +140,7 @@
     "UNPUBLISH": "取消发布"
   },
   "TOOLTIP": {
+    "TASKGROUP_SIGNSTRING": "请输入目标，以及达标的标准...",
     "UPLOAD": "<10M",
     "ENLIST-FEEDBACKLIMIT": "0代表不限制人数！",
     "ENLIST-MONEY": "请谨慎确认金额，无法修改！",

@@ -21,6 +21,4 @@ public interface PaymentMerchantService {
     void removeManager(Principal principal, String id, String managerId);
 
     PaymentMerchantInvite inviteTicket(Principal principal, String id) throws Exception;
-
-    void deleteManager(Principal principal, String id, String managerId) throws Exception;
 }

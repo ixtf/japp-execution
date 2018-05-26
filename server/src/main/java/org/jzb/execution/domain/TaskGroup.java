@@ -8,6 +8,7 @@ package org.jzb.execution.domain;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,6 +24,8 @@ public class TaskGroup extends AbstractLogable implements Comparable<TaskGroup> 
     private UploadFile logo;
     @ManyToOne
     private UploadFile sign;
+    @Lob
+    private String signString;
 
     public String getName() {
         return name;
@@ -46,6 +49,14 @@ public class TaskGroup extends AbstractLogable implements Comparable<TaskGroup> 
 
     public void setSign(UploadFile sign) {
         this.sign = sign;
+    }
+
+    public String getSignString() {
+        return signString;
+    }
+
+    public void setSignString(String signString) {
+        this.signString = signString;
     }
 
     @Override

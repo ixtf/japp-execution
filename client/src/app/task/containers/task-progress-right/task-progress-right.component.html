@@ -39,20 +39,18 @@
       <mat-icon>account_box</mat-icon>
       <span translate="BUTTON.UPDATE-NICKNAME"></span>
     </button>
-    <!--<button type="button" mat-menu-item (click)="share()">-->
-    <!--<mat-icon>share</mat-icon>-->
-    <!--<span translate>COMMON.SHARE</span>-->
-    <!--</button>-->
     <a mat-menu-item [href]="task|shareTimelineUrl|async">
-      <!--<mat-icon>ic_share</mat-icon>-->
-      <mat-icon></mat-icon>
+      <mat-icon>share</mat-icon>
       <span translate="COMMON.SHARE"></span>
     </a>
     <a mat-menu-item [href]="(task|shareTimelineUrl:'TaskClock')|async" *ngIf="isShowShareTaskClock$|async">
-      <!--<mat-icon>ic_share</mat-icon>-->
-      <mat-icon></mat-icon>
+      <mat-icon>screen_share</mat-icon>
       <span>分享(打卡)</span>
     </a>
+    <button type="button" mat-menu-item (click)="createTaskComplain()">
+      <mat-icon>thumb_down</mat-icon>
+      <span>投诉</span>
+    </button>
     <button type="button" mat-menu-item (click)="quit()">
       <mat-icon>clear</mat-icon>
       <span translate="BUTTON.QUIT-TASK"></span>
@@ -78,7 +76,7 @@
         <button type="button" color="primary" (click)="showFollowers(task,$event)" mat-button>
           管理({{task.followers&&task.followers.length}})
         </button>
-        <button (click)="addOperators($event)" mat-icon-button>
+        <button (click)="addOperators($event)" mat-icon-button *ngIf="isManager$|async">
           <mat-icon>person_add</mat-icon>
         </button>
       </td>

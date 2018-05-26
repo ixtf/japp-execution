@@ -1,0 +1,59 @@
+<mat-accordion fxFlex style="overflow-y: auto;">
+  <mat-expansion-panel *ngFor="let task of tasks$|async">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{task.title}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{task.taskGroup.name}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <table class="formGroup">
+      <tr>
+        <td class="lable">{{'TASK.CREATOR'|translate}}</td>
+        <td>
+          {{task.charger|operatorNickname:task|async}}
+          {{task.createDateTime|date:'yyyy-MM-dd HH:mm'}}
+        </td>
+      </tr>
+      <tr>
+        <td>{{'TASK.PARTICIPANT'|translate}}</td>
+        <td>
+          <button type="button" color="primary" mat-button (click)="showParticipants(task)">
+            参与({{task.participantsCount}})
+          </button>
+          <button type="button" color="primary" (click)="showFollowers(task)" mat-button>
+            管理({{task.followersCount}})
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <mat-tab-group class="h40" dynamicHeight [selectedIndex]="rightTabIndex$|async" (focusChange)="focusChange($event)">
+      <mat-tab label="{{'COMMON.CONTENT'|translate}}/{{'COMMON.ATTACHMENT'|translate}}({{task?.attachmentsCount}})">
+        <jwjh-editor-view [content]="task.content"></jwjh-editor-view>
+        <jwjh-file-list [files]="task.attachments"></jwjh-file-list>
+      </mat-tab>
+
+      <mat-tab label="{{'TASK.FEEDBACK'|translate}}({{task?.taskFeedbacks?.length}})">
+        <jwjh-task-feedback-list [task]="task"
+                                 [taskFeedbacks]="task.taskFeedbacks">
+        </jwjh-task-feedback-list>
+      </mat-tab>
+
+      <mat-tab label="{{'TASK.EVALUATE'|translate}}({{task?.taskEvaluates?.length}})">
+        <jwjh-task-evaluate-list [task]="task"
+                                 [taskEvaluates]="task.taskEvaluates">
+        </jwjh-task-evaluate-list>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-paginator (page)="onPage($event)"
+               [length]="count$|async"
+               [pageIndex]="0"
+               [pageSize]="pageSize$|async"
+               [pageSizeOptions]="[10,15,25,50]">
+</mat-paginator>

@@ -26,17 +26,11 @@
     </td>
   </tr>
   <tr>
-    <td class="lable">正在进行的计划</td>
+    <td class="lable">进行中的子计划</td>
     <td>
       {{(task$|async)?.title}}
     </td>
   </tr>
-  <!--<tr *ngIf="chartOptions$|async">-->
-  <!--<td class="lable">{{'TASK.EVALUATE'|translate}}</td>-->
-  <!--<td style="width: 100%;">-->
-  <!--<jwjh-chart [options]="chartOptions$|async" *ngIf="chartOptions$|async"></jwjh-chart>-->
-  <!--</td>-->
-  <!--</tr>-->
 </table>
 
 <jwjh-chart [options]="chartOptions$|async" *ngIf="chartOptions$|async"></jwjh-chart>
@@ -46,12 +40,6 @@
     <mat-panel-title>
       更多
     </mat-panel-title>
-    <!--<mat-panel-title>-->
-    <!--{{'COMMON.MORE'|translate}}-->
-    <!--</mat-panel-title>-->
-    <!--<mat-panel-description>-->
-    <!--Type your name and age-->
-    <!--</mat-panel-description>-->
   </mat-expansion-panel-header>
 
   <mat-list>
@@ -61,4 +49,5 @@
   </mat-list>
 </mat-expansion-panel>
 
-<img [src]="signImgUrl$|async">
+<jwjh-editor-view [content]="(taskGroup$|async)?.signString" *ngIf="(taskGroup$|async)?.signString"></jwjh-editor-view>
+<!--<img [src]="signImgUrl$|async">-->

@@ -101,6 +101,13 @@ public class TaskResource {
         taskService.addParticipants(sc.getUserPrincipal(), id, command);
     }
 
+    @Path("{id}/participants")
+    @DELETE
+    public void deleteParticipant(@Context SecurityContext sc,
+                                  @Valid @NotBlank @PathParam("id") String id) throws Exception {
+        taskService.deleteAllParticipant(sc.getUserPrincipal(), id);
+    }
+
     @Path("{id}/participants/{participantId}")
     @DELETE
     public void deleteParticipant(@Context SecurityContext sc,

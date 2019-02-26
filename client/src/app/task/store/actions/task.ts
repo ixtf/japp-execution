@@ -175,6 +175,15 @@ export class DeleteParticipant implements Action {
   }
 }
 
+export const DELETE_ALL_PARTICIPANT = '[Task] DELETE_ALL_PARTICIPANT';
+
+export class DeleteAllParticipant implements Action {
+  readonly type = DELETE_PARTICIPANT;
+
+  constructor(public taskId: string) {
+  }
+}
+
 export const IMPORT_FOLLOWERS = '[Task] IMPORT_FOLLOWERS';
 
 export class ImportFollowers implements Action {
@@ -271,6 +280,7 @@ export type Actions
   | RestartSuccess
   | DeleteFollower
   | DeleteParticipant
+  | DeleteAllParticipant
   | ImportFollowers
   | ImportParticipants
   | UpdateNickname

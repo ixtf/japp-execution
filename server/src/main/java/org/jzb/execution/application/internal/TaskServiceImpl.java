@@ -185,7 +185,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Principal principal, String id) {
         Task task = taskRepository.find(id);
-        if (task.getCharger().getId().equals(principal.getName())){
+        if (task.getCharger().getId().equals(principal.getName())) {
             taskRepository.delete(id);
         }
     }
@@ -387,13 +387,23 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteParticipant(Principal principal, String id, String participantId) throws Exception {
         Task task = taskRepository.find(id);
-        if (!task.getCharger().getId().equals(principal.getName())) {
+        if (!task.isManager(principal)) {
             throw new JNonAuthorizationError();
         }
         Collection<Operator> participants = task.getParticipants().stream()
                 .filter(operator -> !operator.getId().equals(participantId))
                 .collect(Collectors.toSet());
         task.setParticipants(participants);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteAllParticipant(Principal principal, String id) throws Exception {
+        Task task = taskRepository.find(id);
+        if (!task.isManager(principal)) {
+            throw new JNonAuthorizationError();
+        }
+        task.setParticipants(null);
         taskRepository.save(task);
     }
 
@@ -448,7 +458,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTaskEvaluate(Principal principal, String taskEvaluateId) throws Exception {
         TaskEvaluate taskEvaluate = taskEvaluateRepository.find(taskEvaluateId);
-        if (taskEvaluate.getCreator().getId().equals(principal.getName())){
+        if (taskEvaluate.getCreator().getId().equals(principal.getName())) {
             taskEvaluateRepository.delete(taskEvaluateId);
         }
     }

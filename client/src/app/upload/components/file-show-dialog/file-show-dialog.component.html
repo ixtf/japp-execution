@@ -1,6 +1,15 @@
 <mat-toolbar class="title">
   <a fxFlex class="dialog-title truncate" (click)="download()" style="cursor: pointer">
-    {{'COMMON.DOWNLOAD'|translate}}
+    {{'COMMON.DOWNLOAD'|translate}}(Pdf)
+  </a>
+  <!--<a fxFlex class="dialog-title truncate" (click)="downloadByDocx()" style="cursor: pointer">-->
+    <!--{{'COMMON.DOWNLOAD'|translate}}(Word)-->
+  <!--</a>-->
+  <a fxFlex class="dialog-title truncate" (click)="downloadByQuestion()" style="cursor: pointer">
+    {{'COMMON.DOWNLOAD'|translate}}(试题Word)
+  </a>
+  <a fxFlex class="dialog-title truncate" (click)="downloadByAnswer()" style="cursor: pointer">
+    {{'COMMON.DOWNLOAD'|translate}}(答案Word)
   </a>
   <button class="close" mat-mini-fab matDialogClose>
     <mat-icon>close</mat-icon>

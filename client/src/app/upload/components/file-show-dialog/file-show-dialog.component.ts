@@ -18,6 +18,9 @@ import {UploadService} from '../../services/upload.service';
 export class FileShowDialogComponent {
   readonly file: UploadFile;
   readonly downloadToken: string;
+  readonly downloadTokenByDocx: string;
+  readonly downloadTokenByAnswer: string;
+  readonly downloadTokenByQuestion: string;
   readonly title: string;
   readonly isHtml: boolean;
   readonly html$: Observable<string>;
@@ -32,6 +35,9 @@ export class FileShowDialogComponent {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data.openByJoin) {
       this.downloadToken = data.downloadToken;
+      this.downloadTokenByDocx = data.downloadTokenByDocx;
+      this.downloadTokenByQuestion = data.downloadTokenByQuestion;
+      this.downloadTokenByAnswer = data.downloadTokenByAnswer;
       this.title = data.fileName;
       this.isHtml = true;
       this.html$ = of(sanitizer.bypassSecurityTrustHtml(data.html));
@@ -78,5 +84,17 @@ export class FileShowDialogComponent {
 
   download() {
     window.open(`${baseApiUrl}/opens/downloads/${this.downloadToken}`);
+  }
+
+  downloadByDocx() {
+    window.open(`${baseApiUrl}/opens/downloads/${this.downloadTokenByDocx}`);
+  }
+
+  downloadByQuestion() {
+    window.open(`${baseApiUrl}/opens/downloads/${this.downloadTokenByQuestion}`);
+  }
+
+  downloadByAnswer() {
+    window.open(`${baseApiUrl}/opens/downloads/${this.downloadTokenByAnswer}`);
   }
 }

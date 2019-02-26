@@ -56,6 +56,11 @@ export class TaskOperatorDialogComponent implements OnDestroy {
     this.utilService.showConfirm().subscribe(() => this.store.dispatch(action));
   }
 
+  deleteAllParticipant() {
+    const action = new taskActions.DeleteAllParticipant(this.task$.value.id);
+    this.utilService.showConfirm().subscribe(() => this.store.dispatch(action));
+  }
+
   deleteFollower(operator: Operator) {
     const action = new taskActions.DeleteFollower(this.task$.value.id, operator.id);
     this.utilService.showConfirm().subscribe(() => this.store.dispatch(action));

@@ -48,6 +48,8 @@ public interface TaskService {
 
     void deleteParticipant(Principal principal, String id, String participantId) throws Exception;
 
+    void deleteAllParticipant(Principal principal, String id) throws Exception;
+
     void deleteFollower(Principal principal, String id, String followerId) throws Exception;
 
     TaskEvaluate create(Principal principal, String taskId, TaskEvaluateUpdateCommand command) throws Exception;

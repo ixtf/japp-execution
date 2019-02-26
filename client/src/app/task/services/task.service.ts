@@ -95,6 +95,10 @@ export class TaskService extends CurdService<Task, string> {
     return this.http.delete(`${this.baseUrl}/${taskId}/participants/${participantId}`);
   }
 
+  deleteAllParticipant(taskId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${taskId}/participants`);
+  }
+
   importFollowers(taskId: string, operators: Operator[]): Observable<any> {
     return this.http.put(`${this.baseUrl}/${taskId}/followers`, {operators});
   }

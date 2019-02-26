@@ -233,13 +233,26 @@ public class Util {
 
     public static File toPdf(File file) throws Exception {
         File pdfFile = FileUtils.getFile(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".pdf");
-        if (pdfFile.exists())
+        if (pdfFile.exists()) {
             return pdfFile;
+        }
 
         String tpl = "/opt/libreoffice5.3/program/soffice --convert-to pdf --outdir ${outdir} ${inPath}";
         String command = J.strTpl(tpl, ImmutableMap.of("outdir", file.getParentFile().getAbsolutePath(), "inPath", file.getAbsolutePath()));
         J.exeCli(command);
         return FileUtils.getFile(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".pdf");
+    }
+
+    public static File docxToDoc(File file) {
+        File docFile = FileUtils.getFile(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".doc");
+        if (docFile.exists()) {
+            return docFile;
+        }
+
+        String tpl = "/opt/libreoffice5.3/program/soffice --convert-to doc --outdir ${outdir} ${inPath}";
+        String command = J.strTpl(tpl, ImmutableMap.of("outdir", file.getParentFile().getAbsolutePath(), "inPath", file.getAbsolutePath()));
+        J.exeCli(command);
+        return FileUtils.getFile(file.getParentFile(), FilenameUtils.getBaseName(file.getName()) + ".doc");
     }
 
     public static String getPlanShareDetailWxUrl(Plan plan, MpClient client) {
@@ -304,11 +317,12 @@ public class Util {
                 JPoi.append(doc, answer);
             }
             doc.write(fos);
-            return result;
+//            return result;
+            return Util.docxToDoc(result);
         }
     }
 
-    private static void appendImg(XWPFDocument doc, File imgFile) throws IOException, InvalidFormatException {
+    public static void appendImg(XWPFDocument doc, File imgFile) throws IOException, InvalidFormatException {
         if (imgFile.exists()) {
             ImageIcon ii = new ImageIcon(imgFile.getCanonicalPath());
             Image image = ii.getImage();
@@ -319,4 +333,5 @@ public class Util {
             r.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile.getName(), Units.toEMU(iWidth), Units.toEMU(iHeight));
         }
     }
+
 }

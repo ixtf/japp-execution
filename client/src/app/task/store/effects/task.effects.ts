@@ -127,6 +127,15 @@ export class TaskEffects {
     });
 
   @Effect()
+  deleteAllParticipant$: Observable<Action> = this.actions$
+    .ofType(taskActions.DELETE_ALL_PARTICIPANT)
+    .exhaustMap((action: taskActions.DeleteAllParticipant) => {
+      return this.taskService.deleteAllParticipant(action.taskId)
+        .map(() => new taskActions.Get(action.taskId))
+        .catch(error => of(new ShowError(error)));
+    });
+
+  @Effect()
   importParticipants$: Observable<Action> = this.actions$
     .ofType(taskActions.IMPORT_PARTICIPANTS)
     .filter((action: taskActions.ImportParticipants) => action.participants && action.participants.length > 0)

@@ -19,7 +19,9 @@
           {{'COMMON.DELETE'|translate}}
         </button>
       </mat-list-item>
-      <button type="button" mat-button (click)="deleteAllParticipant()"></button>
+      <mat-list-item>
+        <button type="button" mat-button (click)="deleteAllParticipant()" mat-button color="warn">全部删除</button>
+      </mat-list-item>
     </mat-list>
   </mat-tab>
 

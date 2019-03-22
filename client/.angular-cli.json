@@ -22,6 +22,8 @@
         "styles.less"
       ],
       "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/moment/min/moment.min.js",
         "assets/js/froala_editor.pkgd.min.js",
         "../node_modules/froala-editor/js/languages/zh_cn.js"
       ],

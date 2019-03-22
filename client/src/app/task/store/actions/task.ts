@@ -178,7 +178,7 @@ export class DeleteParticipant implements Action {
 export const DELETE_ALL_PARTICIPANT = '[Task] DELETE_ALL_PARTICIPANT';
 
 export class DeleteAllParticipant implements Action {
-  readonly type = DELETE_PARTICIPANT;
+  readonly type = DELETE_ALL_PARTICIPANT;
 
   constructor(public taskId: string) {
   }
